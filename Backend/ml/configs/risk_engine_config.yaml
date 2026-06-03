@@ -1,0 +1,14 @@
+risk_thresholds:
+  low: 0.30
+  medium: 0.60
+  high: 0.80
+weights:
+  stockout_probability: 0.55
+  days_supply_risk: 0.20
+  vendor_risk: 0.15
+  anomaly_risk: 0.10
+business_rules:
+  criticality_boost:
+    High: 0.10
+    Critical: 0.15
+  active_po_reduction: 0.05
