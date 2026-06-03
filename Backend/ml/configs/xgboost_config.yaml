@@ -1,0 +1,36 @@
+random_state: 42
+test_size: 0.2
+target_column: stockout_event
+date_column: snapshot_date
+id_columns:
+  - record_id
+  - item_id
+  - facility_id
+model:
+  n_estimators: 450
+  learning_rate: 0.045
+  max_depth: 5
+  min_child_weight: 3
+  subsample: 0.9
+  colsample_bytree: 0.9
+  objective: binary:logistic
+  eval_metric: logloss
+  tree_method: hist
+  n_jobs: -1
+threshold:
+  optimize_for: f1
+  min_threshold: 0.10
+  max_threshold: 0.90
+  step: 0.01
+paths:
+  raw_data: data/raw/healthcare_supply_chain_01.csv
+  processed_data: data/processed/processed_inventory.csv
+  model: artifacts/xgboost_model.pkl
+  preprocessing_pipeline: artifacts/preprocessing_pipeline.pkl
+  metrics: artifacts/model_metrics.json
+  classification_report: artifacts/classification_report.json
+  confusion_matrix: artifacts/confusion_matrix.png
+  feature_importance: artifacts/feature_importance.png
+  feature_list: artifacts/feature_list.json
+  model_metadata: artifacts/model_metadata.json
+  threshold_config: artifacts/threshold_config.json
