@@ -1,0 +1,60 @@
+2026-06-11 11:21:00.651 | INFO     | main:lifespan:29 - MongoDB connected successfully
+2026-06-11 11:21:01.428 | CRITICAL | main:lifespan:38 - ML predictor initialization failed: No module named 'src'
+2026-06-11 11:21:01.662 | INFO     | app.db.indexes:create_all_indexes:94 - All MongoDB indexes created successfully
+2026-06-11 11:21:01.663 | INFO     | main:lifespan:41 - MongoDB indexes initialized successfully
+2026-06-11 11:21:26.850 | INFO     | app.utils.logger:log_request:60 - GET / completed with 404 in 0.91ms
+2026-06-11 11:21:40.990 | INFO     | app.utils.logger:log_request:60 - GET /openapi.json completed with 200 in 0.9ms
+2026-06-11 11:24:12.713 | INFO     | main:lifespan:46 - MongoDB connection closed
+2026-06-11 11:24:16.168 | INFO     | main:lifespan:30 - MongoDB connected successfully
+2026-06-11 11:24:16.663 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: [Errno 2] No such file or directory: 'configs/xgboost_config.yaml'
+2026-06-11 11:24:16.685 | INFO     | app.db.indexes:create_all_indexes:94 - All MongoDB indexes created successfully
+2026-06-11 11:24:16.685 | INFO     | main:lifespan:42 - MongoDB indexes initialized successfully
+2026-06-11 11:24:23.431 | INFO     | main:lifespan:47 - MongoDB connection closed
+2026-06-11 11:24:24.622 | INFO     | main:lifespan:30 - MongoDB connected successfully
+2026-06-11 11:24:24.624 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: No module named 'backend'
+2026-06-11 11:24:24.641 | INFO     | app.db.indexes:create_all_indexes:94 - All MongoDB indexes created successfully
+2026-06-11 11:24:24.642 | INFO     | main:lifespan:42 - MongoDB indexes initialized successfully
+2026-06-11 11:26:15.789 | INFO     | main:lifespan:47 - MongoDB connection closed
+2026-06-11 11:26:17.105 | INFO     | main:lifespan:30 - MongoDB connected successfully
+2026-06-11 11:26:17.107 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: No module named 'backend'
+2026-06-11 11:26:17.129 | INFO     | app.db.indexes:create_all_indexes:94 - All MongoDB indexes created successfully
+2026-06-11 11:26:17.129 | INFO     | main:lifespan:42 - MongoDB indexes initialized successfully
+2026-06-11 11:27:57.361 | INFO     | main:lifespan:47 - MongoDB connection closed
+2026-06-11 11:27:59.800 | INFO     | main:lifespan:30 - MongoDB connected successfully
+2026-06-11 11:27:59.801 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: No module named 'backend'
+2026-06-11 11:27:59.823 | INFO     | app.db.indexes:create_all_indexes:94 - All MongoDB indexes created successfully
+2026-06-11 11:27:59.823 | INFO     | main:lifespan:42 - MongoDB indexes initialized successfully
+2026-06-11 11:28:48.159 | INFO     | main:lifespan:47 - MongoDB connection closed
+2026-06-11 11:28:50.575 | INFO     | main:lifespan:30 - MongoDB connected successfully
+2026-06-11 11:28:50.575 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: attempted relative import with no known parent package
+2026-06-11 11:28:50.594 | INFO     | app.db.indexes:create_all_indexes:94 - All MongoDB indexes created successfully
+2026-06-11 11:28:50.594 | INFO     | main:lifespan:42 - MongoDB indexes initialized successfully
+2026-06-11 11:29:36.528 | INFO     | main:lifespan:47 - MongoDB connection closed
+2026-06-11 11:29:37.530 | INFO     | main:lifespan:30 - MongoDB connected successfully
+2026-06-11 11:29:37.871 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: Artifact not found: artifacts\xgboost_model.pkl
+2026-06-11 11:29:37.890 | INFO     | app.db.indexes:create_all_indexes:94 - All MongoDB indexes created successfully
+2026-06-11 11:29:37.890 | INFO     | main:lifespan:42 - MongoDB indexes initialized successfully
+2026-06-11 11:30:08.169 | INFO     | main:lifespan:47 - MongoDB connection closed
+2026-06-11 11:30:09.404 | INFO     | main:lifespan:30 - MongoDB connected successfully
+2026-06-11 11:30:09.722 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: Artifact not found: artifacts\xgboost_model.pkl
+2026-06-11 11:30:09.744 | INFO     | app.db.indexes:create_all_indexes:94 - All MongoDB indexes created successfully
+2026-06-11 11:30:09.745 | INFO     | main:lifespan:42 - MongoDB indexes initialized successfully
+2026-06-11 11:30:59.904 | INFO     | main:lifespan:47 - MongoDB connection closed
+2026-06-11 11:31:00.816 | INFO     | main:lifespan:30 - MongoDB connected successfully
+2026-06-11 11:31:01.127 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: Artifact not found: C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\backend\ml\artifacts\xgboost_model.pkl
+2026-06-11 11:31:01.145 | INFO     | app.db.indexes:create_all_indexes:94 - All MongoDB indexes created successfully
+2026-06-11 11:31:01.145 | INFO     | main:lifespan:42 - MongoDB indexes initialized successfully
+2026-06-11 11:35:37.495 | INFO     | main:lifespan:47 - MongoDB connection closed
+2026-06-11 11:51:13.681 | INFO     | main:lifespan:30 - MongoDB connected successfully
+2026-06-11 11:51:16.668 | INFO     | main:lifespan:37 - RealtimeStockoutPredictor initialized successfully
+2026-06-11 11:51:16.683 | INFO     | app.db.indexes:create_all_indexes:94 - All MongoDB indexes created successfully
+2026-06-11 11:51:16.684 | INFO     | main:lifespan:42 - MongoDB indexes initialized successfully
+2026-06-11 11:51:30.721 | INFO     | app.utils.logger:log_request:60 - GET / completed with 404 in 1.05ms
+2026-06-11 11:51:39.635 | INFO     | app.utils.logger:log_request:60 - GET /openapi.json completed with 200 in 4.38ms
+2026-06-11 11:57:59.729 | INFO     | main:lifespan:47 - MongoDB connection closed
+2026-06-11 12:03:38.876 | INFO     | main:lifespan:30 - MongoDB connected successfully
+2026-06-11 12:03:41.642 | INFO     | main:lifespan:37 - RealtimeStockoutPredictor initialized successfully
+2026-06-11 12:03:41.664 | INFO     | app.db.indexes:create_all_indexes:94 - All MongoDB indexes created successfully
+2026-06-11 12:03:41.665 | INFO     | main:lifespan:42 - MongoDB indexes initialized successfully
+2026-06-11 12:03:41.793 | INFO     | app.utils.logger:log_request:60 - GET / completed with 404 in 0.61ms
+2026-06-11 12:03:48.108 | INFO     | app.utils.logger:log_request:60 - GET /openapi.json completed with 200 in 1.31ms

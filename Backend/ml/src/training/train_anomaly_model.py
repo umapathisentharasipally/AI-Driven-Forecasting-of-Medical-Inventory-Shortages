@@ -1,6 +1,7 @@
 from __future__ import annotations
 import argparse
 import json
+import yaml
 import pandas as pd
 from src.data.data_cleaner import clean_inventory_data
 from src.data.data_loader import load_csv, save_csv
@@ -8,17 +9,14 @@ from src.features.anomaly_features import build_anomaly_features
 from src.models.isolation_forest_model import build_isolation_forest
 from src.preprocessing.preprocessing_pipeline import build_preprocessing_pipeline
 from src.utils.save_load_model import save_object
-from src.utils.config import load_yaml_config
-from src.utils.error_handler import log_and_raise
-from src.utils.exceptions import ModelTrainingError
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
 
-@log_and_raise("Anomaly model training failed", ModelTrainingError)
 def train_anomaly_model(config_path: str = "configs/anomaly_config.yaml") -> dict:
-    config = load_yaml_config(config_path, required_keys=["paths", "feature_columns"])
+    with open(config_path, "r", encoding="utf-8") as file:
+        config = yaml.safe_load(file)
     paths = config["paths"]
     df = clean_inventory_data(load_csv(paths["raw_data"]), require_target=False)
     data = build_anomaly_features(df)

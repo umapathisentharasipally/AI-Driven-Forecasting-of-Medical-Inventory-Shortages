@@ -10,11 +10,6 @@ from src.data.data_cleaner import clean_inventory_data
 from src.data.data_loader import load_csv
 from src.features.feature_pipeline import create_features
 from src.utils.metrics import save_json
-from src.utils.error_handler import log_and_raise
-from src.utils.exceptions import MonitoringError
-from src.utils.logger import get_logger
-
-logger = get_logger(__name__)
 
 
 def _numeric_psi(expected: pd.Series, actual: pd.Series, buckets: int = 10) -> float:
@@ -45,8 +40,6 @@ def _categorical_shift(expected: pd.Series, actual: pd.Series) -> float:
     return float((expected_pct.reindex(categories, fill_value=0) - actual_pct.reindex(categories, fill_value=0)).abs().max())
 
 
-
-@log_and_raise("Data drift monitoring failed", MonitoringError)
 def generate_data_drift_report(
     baseline_path: str = "data/processed/processed_inventory.csv",
     current_path: str = "data/raw/healthcare_supply_chain_01.csv",
@@ -77,7 +70,6 @@ def generate_data_drift_report(
         "drift_detected": bool(high_numeric or high_categorical),
     }
     save_json(report, output_path)
-    logger.info("Data drift report saved: %s drift_detected=%s", output_path, report["drift_detected"])
     return report
 
 

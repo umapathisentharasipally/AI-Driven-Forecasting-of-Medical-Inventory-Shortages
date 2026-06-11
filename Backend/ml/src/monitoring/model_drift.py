@@ -4,27 +4,23 @@ import argparse
 import json
 from pathlib import Path
 
+import yaml
+
 from src.data.data_cleaner import clean_inventory_data
 from src.data.data_loader import load_csv
 from src.features.feature_pipeline import create_features
 from src.training.evaluate import evaluate_binary_classifier
 from src.utils.metrics import save_json
-from src.utils.config import load_yaml_config
-from src.utils.error_handler import log_and_raise
-from src.utils.exceptions import MonitoringError
-from src.utils.logger import get_logger
-
-logger = get_logger(__name__)
 from src.utils.save_load_model import load_object
 
 
-@log_and_raise("Model drift monitoring failed", MonitoringError)
 def evaluate_model_on_labeled_data(
     input_path: str = "data/raw/healthcare_supply_chain_01.csv",
     config_path: str = "configs/xgboost_config.yaml",
     output_path: str = "artifacts/model_drift_report.json",
 ) -> dict:
-    config = load_yaml_config(config_path, required_keys=["target_column", "date_column", "paths"])
+    with open(config_path, "r", encoding="utf-8") as file:
+        config = yaml.safe_load(file)
 
     target = config["target_column"]
     paths = config["paths"]
@@ -62,7 +58,6 @@ def evaluate_model_on_labeled_data(
         "model_drift_detected": any(drop >= 0.10 for drop in metric_drop.values()),
     }
     save_json(report, output_path)
-    logger.info("Model drift report saved: %s drift_detected=%s", output_path, report["model_drift_detected"])
     return report
 
 

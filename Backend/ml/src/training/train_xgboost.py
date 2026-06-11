@@ -1,6 +1,7 @@
 from __future__ import annotations
 import argparse
 from pathlib import Path
+import yaml
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from src.data.data_cleaner import clean_inventory_data
@@ -15,23 +16,19 @@ from src.training.evaluate import (
 )
 from src.utils.metrics import find_best_threshold, save_json
 from src.utils.save_load_model import save_object
-from src.utils.config import load_yaml_config
-from src.utils.error_handler import log_and_raise
-from src.utils.exceptions import ModelTrainingError
-from src.utils.logger import get_logger, log_exception
+from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
 
-@log_and_raise("XGBoost training failed", ModelTrainingError)
 def train_xgboost(config_path: str = "configs/xgboost_config.yaml") -> dict:
-    config = load_yaml_config(config_path, required_keys=["target_column", "date_column", "paths", "model"])
+    with open(config_path, "r", encoding="utf-8") as file:
+        config = yaml.safe_load(file)
     target = config["target_column"]
     date_col = config["date_column"]
     id_cols = config.get("id_columns", [])
     paths = config["paths"]
 
-    logger.info("Starting XGBoost training using config=%s", config_path)
     df = load_csv(paths["raw_data"])
     validate_inventory_schema(df, require_target=True)
     df = clean_inventory_data(df, require_target=True)
@@ -81,44 +78,16 @@ def train_xgboost(config_path: str = "configs/xgboost_config.yaml") -> dict:
         "categorical_columns": categorical_cols,
     })
 
-    feature_list = X.columns.tolist()
-    threshold_config = {
-        "threshold": float(best_threshold),
-        "optimized_for": threshold_cfg.get("optimize_for", "f1"),
-        "min_threshold": threshold_cfg.get("min_threshold", 0.1),
-        "max_threshold": threshold_cfg.get("max_threshold", 0.9),
-        "step": threshold_cfg.get("step", 0.01),
-    }
-    model_metadata = {
-        "model_name": "xgboost_stockout_classifier",
-        "target_column": target,
-        "date_column": date_col,
-        "id_columns": id_cols,
-        "raw_data_path": paths["raw_data"],
-        "processed_data_path": paths["processed_data"],
-        "rows": int(len(featured)),
-        "original_columns": int(df.shape[1]),
-        "engineered_columns": int(featured.shape[1]),
-        "model_features": int(X.shape[1]),
-        "numeric_columns": numeric_cols,
-        "categorical_columns": categorical_cols,
-        "feature_list_path": paths.get("feature_list", "artifacts/feature_list.json"),
-        "threshold_config_path": paths.get("threshold_config", "artifacts/threshold_config.json"),
-    }
-
     save_object(pipeline, paths["model"])
     save_object(pipeline.named_steps["preprocessor"], paths["preprocessing_pipeline"])
     save_json(metrics, paths["metrics"])
-    save_json({"features": feature_list}, paths.get("feature_list", "artifacts/feature_list.json"))
-    save_json(model_metadata, paths.get("model_metadata", "artifacts/model_metadata.json"))
-    save_json(threshold_config, paths.get("threshold_config", "artifacts/threshold_config.json"))
     save_classification_report(y_test, y_prob, best_threshold, paths["classification_report"])
     save_confusion_matrix_plot(y_test, y_prob, best_threshold, paths["confusion_matrix"])
     try:
         feature_names = pipeline.named_steps["preprocessor"].get_feature_names_out().tolist()
         save_feature_importance_plot(pipeline.named_steps["model"], feature_names, paths["feature_importance"])
     except Exception as exc:
-        log_exception(logger, "Could not save feature importance plot", exc)
+        logger.warning("Could not save feature importance plot: %s", exc)
 
     threshold_scores.to_csv(Path(paths["metrics"]).with_name("threshold_scores.csv"), index=False)
     logger.info("Training completed. Metrics saved to %s", paths["metrics"])
@@ -129,8 +98,4 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="configs/xgboost_config.yaml")
     args = parser.parse_args()
-    try:
-        print(train_xgboost(args.config))
-    except Exception as exc:
-        logger.error("Training command failed: %s", exc)
-        raise
+    print(train_xgboost(args.config))

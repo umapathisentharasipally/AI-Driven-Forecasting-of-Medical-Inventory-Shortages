@@ -14,8 +14,12 @@ def create_lstm_sequences(values: np.ndarray, lookback: int) -> tuple[np.ndarray
 
 def build_lstm_model(lookback: int, units: int = 64, dropout: float = 0.2):
     try:
-        from tensorflow.keras import Sequential
-        from tensorflow.keras.layers import Dense, Dropout, LSTM
+        import importlib
+        keras = importlib.import_module("tensorflow.keras")
+        Sequential = keras.Sequential
+        Dense = keras.layers.Dense
+        Dropout = keras.layers.Dropout
+        LSTM = keras.layers.LSTM
     except ImportError as exc:
         raise ImportError("TensorFlow is not installed. Install it with: pip install tensorflow") from exc
     model = Sequential([

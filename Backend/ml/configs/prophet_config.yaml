@@ -11,7 +11,7 @@ model:
   yearly_seasonality: true
   seasonality_mode: additive
 paths:
-  raw_data: data/raw/healthcare_supply_chain_01.csv
+  raw_data: data/raw/medical_inventory.csv
   forecast_output: data/forecasts/demand_forecast.csv
   model: artifacts/prophet_model.pkl
   trend_report: artifacts/trend_report.json

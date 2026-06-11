@@ -1,5 +1,5 @@
 import pandas as pd
-from .feature_engineering import safe_divide
+from src.features.feature_engineering import safe_divide
 
 
 def build_anomaly_features(df: pd.DataFrame) -> pd.DataFrame:

@@ -5,15 +5,8 @@ import argparse
 from src.training.train_prophet import train_prophet
 from src.training.train_lstm import train_lstm
 from src.utils.metrics import save_json
-from src.utils.error_handler import log_and_raise
-from src.utils.exceptions import ModelTrainingError
-from src.utils.logger import get_logger
-
-logger = get_logger(__name__)
 
 
-
-@log_and_raise("Forecast pipeline failed", ModelTrainingError)
 def run_forecast_pipeline(
     prophet_config: str = "configs/prophet_config.yaml",
     train_lstm_model: bool = False,

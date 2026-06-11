@@ -23,7 +23,7 @@ threshold:
   max_threshold: 0.90
   step: 0.01
 paths:
-  raw_data: data/raw/healthcare_supply_chain_01.csv
+  raw_data: data/raw/medical_inventory.csv
   processed_data: data/processed/processed_inventory.csv
   model: artifacts/xgboost_model.pkl
   preprocessing_pipeline: artifacts/preprocessing_pipeline.pkl
@@ -31,6 +31,3 @@ paths:
   classification_report: artifacts/classification_report.json
   confusion_matrix: artifacts/confusion_matrix.png
   feature_importance: artifacts/feature_importance.png
-  feature_list: artifacts/feature_list.json
-  model_metadata: artifacts/model_metadata.json
-  threshold_config: artifacts/threshold_config.json

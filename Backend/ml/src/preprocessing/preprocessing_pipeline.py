@@ -2,9 +2,9 @@ from __future__ import annotations
 import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
-from ..preprocessing.encoding import one_hot_encoder
-from ..preprocessing.missing_value_handler import categorical_imputer, numeric_imputer
-from ..preprocessing.scaling import standard_scaler
+from src.preprocessing.encoding import one_hot_encoder
+from src.preprocessing.missing_value_handler import categorical_imputer, numeric_imputer
+from src.preprocessing.scaling import standard_scaler
 
 
 def infer_feature_columns(df: pd.DataFrame, excluded_columns: list[str]) -> tuple[list[str], list[str]]:

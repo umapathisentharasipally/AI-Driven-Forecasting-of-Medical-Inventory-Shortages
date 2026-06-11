@@ -6,15 +6,8 @@ from src.training.train_xgboost import train_xgboost
 from src.training.train_anomaly_model import train_anomaly_model
 from src.training.train_prophet import train_prophet
 from src.utils.metrics import save_json
-from src.utils.error_handler import log_and_raise
-from src.utils.exceptions import ModelTrainingError
-from src.utils.logger import get_logger
-
-logger = get_logger(__name__)
 
 
-
-@log_and_raise("Training pipeline failed", ModelTrainingError)
 def run_training_pipeline(
     xgboost_config: str = "configs/xgboost_config.yaml",
     anomaly_config: str = "configs/anomaly_config.yaml",

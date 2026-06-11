@@ -10,7 +10,7 @@ TARGET_COLUMN = "stockout_event"
 DATE_COLUMN = "snapshot_date"
 ID_COLUMNS = ["record_id", "item_id", "facility_id"]
 
-RAW_DATA_PATH = DATA_DIR / "raw" / "healthcare_supply_chain_01.csv"
+RAW_DATA_PATH = DATA_DIR / "raw" / "medical_inventory.csv"
 PROCESSED_DATA_PATH = DATA_DIR / "processed" / "processed_inventory.csv"
 PREDICTION_OUTPUT_PATH = DATA_DIR / "predictions" / "prediction_results.csv"
 FORECAST_OUTPUT_PATH = DATA_DIR / "forecasts" / "demand_forecast.csv"

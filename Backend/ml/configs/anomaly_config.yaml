@@ -19,7 +19,7 @@ feature_columns:
   - lead_time_variability_days
   - backorder_frequency_last_12m
 paths:
-  raw_data: data/raw/healthcare_supply_chain_01.csv
+  raw_data: data/raw/medical_inventory.csv
   anomaly_output: data/anomalies/anomaly_results.csv
   model: artifacts/isolation_forest_model.pkl
   report: artifacts/anomaly_report.json
