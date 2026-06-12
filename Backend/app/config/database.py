@@ -12,8 +12,8 @@ _database: Optional[AsyncIOMotorDatabase] = None
 async def connect_db() -> None:
     global _client, _database
     if _client is None:
-        _client = AsyncIOMotorClient(settings.MONGO_URI)
-        _database = _client[settings.DB_NAME]
+        _client = AsyncIOMotorClient(settings.mongo_uri)
+        _database = _client[settings.MONGO_DB_NAME]
 
 
 def get_db_client() -> AsyncIOMotorClient:

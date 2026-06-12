@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 from pathlib import Path
 import sys
+import json
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -30,14 +31,34 @@ async def lifespan(app: FastAPI):
     logger.info("MongoDB connected successfully")
 
     app.state.predictor = None
-    try:
-        from src.inference.realtime_predict import RealtimeStockoutPredictor
+    app.state.model_version = "unknown"
 
-        app.state.predictor = RealtimeStockoutPredictor()
-        logger.info("RealtimeStockoutPredictor initialized successfully")
+    try:
+        metadata_path = BASE_DIR / settings.ML_ARTIFACTS_PATH / "model_metadata.json"
+
+        if metadata_path.exists():
+            with metadata_path.open("r", encoding="utf-8") as file:
+                metadata = json.load(file)
+                app.state.model_version = str(
+                    metadata.get("model_version")
+                    or metadata.get("version")
+                    or "unknown"
+                )
+
+        from ml.src.inference.realtime_predict import RealtimeStockoutPredictor
+
+        app.state.predictor = RealtimeStockoutPredictor(
+            config_path=str(BASE_DIR / settings.ML_CONFIGS_PATH / "xgboost_config.yaml"),
+            risk_config_path=str(BASE_DIR / settings.ML_CONFIGS_PATH / "risk_engine_config.yaml"),
+        )
+
+        logger.info(
+            f"RealtimeStockoutPredictor initialized successfully, "
+            f"model_version={app.state.model_version}"
+        )
+
     except Exception as exc:
         logger.critical(f"ML predictor initialization failed: {exc}")
-
     await create_all_indexes()
     logger.info("MongoDB indexes initialized successfully")
 

@@ -1,7 +1,7 @@
 from typing import Any, Dict
 
 from bson import ObjectId
-from fastapi import Depends
+from fastapi import Depends , Request
 from fastapi.security import OAuth2PasswordBearer
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
@@ -15,6 +15,7 @@ UserDocument = Dict[str, Any]
 
 
 async def get_current_user(
+    request: Request,
     token: str = Depends(oauth2_scheme),
     db: AsyncIOMotorDatabase = Depends(get_database),
 ) -> UserDocument:
@@ -34,6 +35,9 @@ async def get_current_user(
     user = await db["users"].find_one(query)
     if not user:
         raise UnauthorizedException("User not found or token is invalid")
+
+    request.state.user = user
+    request.state.user_id = str(user["_id"])
 
     return user
 

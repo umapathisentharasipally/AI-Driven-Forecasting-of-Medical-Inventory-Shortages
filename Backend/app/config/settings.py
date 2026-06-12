@@ -4,8 +4,21 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    MONGO_URI: str
-    DB_NAME: str = "medical_inventory"
+    MONGO_DB_NAME: str
+    MONGO_CLUSTER_NAME: str
+    MONGO_USERNAME: str
+    MONGO_PASSWORD: str
+
+    @property
+    def mongo_uri(self):
+        return (
+            f"mongodb+srv://"
+            f"{self.MONGO_USERNAME}:"
+            f"{self.MONGO_PASSWORD}@"
+            f"{self.MONGO_CLUSTER_NAME}.mongodb.net/"
+            f"{self.MONGO_DB_NAME}"
+            f"?retryWrites=true&w=majority"
+        )
 
     SECRET_KEY: str
     ALGORITHM: str = "HS256"

@@ -51,8 +51,8 @@ def _build_prediction_input(item: dict) -> dict:
     return record
 
 
-def _get_model_version(predictor) -> str:
-    return getattr(predictor, "model_version", "unknown")
+#def _get_model_version(predictor) -> str:
+    #return getattr(predictor, "model_version", "unknown")
 
 
 def to_prediction_response(prediction: dict) -> RealtimePredictResponse:
@@ -99,6 +99,7 @@ async def predict_realtime(
     db: AsyncIOMotorDatabase,
     request: RealtimePredictRequest,
     predictor,
+    model_version: str,
     current_user_id: str,
 ) -> RealtimePredictResponse:
     if predictor is None:
@@ -112,11 +113,10 @@ async def predict_realtime(
 
     try:
         prediction_result = predictor.predict_one(feature_snapshot)
-    except MLInferenceException:
-        raise
+    except Exception as exc:
+        raise MLInferenceException("Realtime prediction failed") from exc
 
-    model_version = _get_model_version(predictor)
-
+    model_version = model_version or "unknown"
     prediction_doc = _build_prediction_document(
         item=item,
         prediction_result=prediction_result,
@@ -126,9 +126,20 @@ async def predict_realtime(
 
     created = await prediction_repository.create(db, prediction_doc)
 
+    # NEW
     if created["risk_level"] in ["High", "Critical"]:
-        logger.warning(f"High risk: {created['item_id']}")
-
+        asyncio.create_task(
+            alert_service.create_stockout_alert(
+                db=db,
+                item_id=created["item_id"],
+                facility_id=created["facility_id"],
+                inventory_doc_id=created["inventory_doc_id"],
+                prediction_id=str(created["_id"]),
+                stockout_probability=float(created["stockout_probability"]),
+                risk_level=created["risk_level"],
+                item_name=item["item_name"],
+            )
+        )
     return to_prediction_response(created)
 
 
@@ -136,6 +147,7 @@ async def predict_batch(
     db: AsyncIOMotorDatabase,
     request: BatchPredictRequest,
     predictor,
+    model_version: str,
     current_user_id: str,
 ) -> BatchPredictResponse:
     if predictor is None:
@@ -169,7 +181,7 @@ async def predict_batch(
             "Either run_all must be true or item_ids must be provided"
         )
 
-    successful_predictions: List[dict] = []
+    succeeded = 0
     failed = 0
     high_risk_count = 0
     critical_count = 0
@@ -184,17 +196,24 @@ async def predict_batch(
 
         try:
             feature_snapshot = _build_prediction_input(item)
-            prediction_result = predictor.predict_one(feature_snapshot)
+
+            try:
+                prediction_result = predictor.predict_one(feature_snapshot)
+            except Exception as exc:
+                raise MLInferenceException("Batch prediction failed") from exc
 
             prediction_doc = _build_prediction_document(
                 item=item,
                 prediction_result=prediction_result,
                 feature_snapshot=feature_snapshot,
-                model_version=_get_model_version(predictor),
+                model_version=model_version or "unknown",
             )
 
-            probability = float(prediction_doc["stockout_probability"])
-            risk_level = prediction_doc["risk_level"]
+            created = await prediction_repository.create(db, prediction_doc)
+            succeeded += 1
+
+            probability = float(created["stockout_probability"])
+            risk_level = created["risk_level"]
 
             if probability >= 0.7:
                 high_risk_count += 1
@@ -203,21 +222,27 @@ async def predict_batch(
                 critical_count += 1
 
             if risk_level in ["High", "Critical"]:
-                logger.warning(f"High risk: {prediction_doc['item_id']}")
-
-            successful_predictions.append(prediction_doc)
+                asyncio.create_task(
+                    alert_service.create_stockout_alert(
+                        db=db,
+                        item_id=created["item_id"],
+                        facility_id=created["facility_id"],
+                        inventory_doc_id=created["inventory_doc_id"],
+                        prediction_id=str(created["_id"]),
+                        stockout_probability=float(created["stockout_probability"]),
+                        risk_level=created["risk_level"],
+                        item_name=item["item_name"],
+                    )
+                )
 
         except MLInferenceException:
             failed += 1
-
-    inserted_count = await prediction_repository.bulk_create(
-        db=db,
-        predictions=successful_predictions,
-    )
+        except Exception:
+            failed += 1
 
     return BatchPredictResponse(
         total_items=len(items),
-        succeeded=inserted_count,
+        succeeded=succeeded,
         failed=failed,
         high_risk_count=high_risk_count,
         critical_count=critical_count,

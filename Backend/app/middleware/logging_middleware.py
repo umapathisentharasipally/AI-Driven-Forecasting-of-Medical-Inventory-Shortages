@@ -1,33 +1,56 @@
-import time
-
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 
-from app.utils.logger import log_request
+from app.utils.date_utils import utc_now
+from app.utils.logger import get_logger
+
+logger = get_logger(__name__)
+
+SKIP_PREFIXES = (
+    "/health",
+    "/docs",
+    "/redoc",
+    "/openapi.json",
+)
+
+
+def _should_skip(path: str) -> bool:
+    return any(path.startswith(prefix) for prefix in SKIP_PREFIXES)
+
+
+def _client_ip(request: Request) -> str | None:
+    forwarded_for = request.headers.get("x-forwarded-for")
+    if forwarded_for:
+        return forwarded_for.split(",")[0].strip()
+
+    if request.client:
+        return request.client.host
+
+    return None
 
 
 class LoggingMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
-        if request.url.path.startswith("/health") or request.url.path.startswith("/docs"):
+        if _should_skip(request.url.path):
             return await call_next(request)
 
-        start_time = time.perf_counter()
-        response = await call_next(request)
-        duration_ms = round((time.perf_counter() - start_time) * 1000, 2)
+        start = utc_now()
+        response = None
 
-        user_id = getattr(request.state, "user_id", None)
-        ip = request.client.host if request.client else None
+        try:
+            response = await call_next(request)
+            return response
+        finally:
+            duration_ms = round((utc_now() - start).total_seconds() * 1000, 2)
 
-        log_request(
-            method=request.method,
-            path=request.url.path,
-            status=response.status_code,
-            duration_ms=duration_ms,
-            user_id=user_id,
-        )
+            user = getattr(request.state, "user", None)
+            user_id = str(user["_id"]) if user else None
 
-        response.headers["X-Process-Time-ms"] = str(duration_ms)
-        if ip:
-            response.headers["X-Client-IP"] = ip
-
-        return response
+            logger.bind(
+                method=request.method,
+                path=request.url.path,
+                status_code=response.status_code if response else 500,
+                duration_ms=duration_ms,
+                user_id=user_id,
+                ip=_client_ip(request),
+            ).info("request_completed")
