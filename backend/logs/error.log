@@ -1,0 +1,9 @@
+2026-06-11 11:21:01.428 | CRITICAL | main:lifespan:38 - ML predictor initialization failed: No module named 'src'
+2026-06-11 11:24:16.663 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: [Errno 2] No such file or directory: 'configs/xgboost_config.yaml'
+2026-06-11 11:24:24.624 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: No module named 'backend'
+2026-06-11 11:26:17.107 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: No module named 'backend'
+2026-06-11 11:27:59.801 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: No module named 'backend'
+2026-06-11 11:28:50.575 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: attempted relative import with no known parent package
+2026-06-11 11:29:37.871 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: Artifact not found: artifacts\xgboost_model.pkl
+2026-06-11 11:30:09.722 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: Artifact not found: artifacts\xgboost_model.pkl
+2026-06-11 11:31:01.127 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: Artifact not found: C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\backend\ml\artifacts\xgboost_model.pkl
