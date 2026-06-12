@@ -1,0 +1,17 @@
+date_column: snapshot_date
+target_column: avg_daily_usage_last_30d
+forecast_periods: 30
+frequency: D
+group_columns:
+  - item_id
+  - facility_id
+model:
+  daily_seasonality: false
+  weekly_seasonality: true
+  yearly_seasonality: true
+  seasonality_mode: additive
+paths:
+  raw_data: data/raw/medical_inventory.csv
+  forecast_output: data/forecasts/demand_forecast.csv
+  model: artifacts/prophet_model.pkl
+  trend_report: artifacts/trend_report.json

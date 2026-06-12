@@ -1,0 +1,5 @@
+2026-06-11 11:43:44,826 | INFO | src.training.train_xgboost | Training XGBoost model with 71270 rows and 50 features
+2026-06-11 11:45:19,596 | INFO | src.training.train_xgboost | Training XGBoost model with 71270 rows and 50 features
+2026-06-11 11:45:40,787 | INFO | src.training.train_xgboost | Training completed. Metrics saved to artifacts/model_metrics.json
+2026-06-11 11:45:44,049 | INFO | src.training.train_prophet | Prophet forecast saved to data/forecasts/demand_forecast.csv
+2026-06-11 11:45:52,949 | INFO | src.training.train_anomaly_model | Anomaly model saved to artifacts/isolation_forest_model.pkl
