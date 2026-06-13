@@ -1,8 +1,11 @@
 import asyncio
 
 from fastapi import APIRouter, Depends, Request
-from app.services.audit_log_service import log_action
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi.security import (
+    HTTPAuthorizationCredentials,
+    HTTPBearer,
+    OAuth2PasswordRequestForm,
+)
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from app.config.database import get_database
@@ -14,26 +17,20 @@ from app.services.audit_log_service import log_action
 from app.services.user_service import to_user_response
 
 router = APIRouter()
-#logger = get_logger(__name__)
 bearer_scheme = HTTPBearer()
-
-
-
-#async def audit_auth_stub(action: str, email: str | None = None, user_id: str | None = None) -> None:
-    #logger.info(
-        #"auth_audit_event",
-        #action=action,
-        #email=email,
-        #user_id=user_id,
-   # )
 
 
 @router.post("/login")
 async def login(
-    data: LoginRequest,
     request: Request,
+    form_data: OAuth2PasswordRequestForm = Depends(),
     db: AsyncIOMotorDatabase = Depends(get_database),
 ):
+    data = LoginRequest(
+        email=form_data.username,
+        password=form_data.password,
+    )
+
     token_response = await auth_service.login(db, data)
 
     if token_response.user is not None:
@@ -48,10 +45,10 @@ async def login(
             )
         )
 
-    return success_response(
-        data=token_response.model_dump(mode="json"),
-        message="Login successful",
-    )
+    return {
+        "access_token": token_response.access_token,
+        "token_type": "bearer",
+    }
 
 
 @router.post("/refresh")
@@ -88,6 +85,7 @@ async def logout(
 
     return success_response(message="Logged out successfully")
 
+
 @router.post("/change-password")
 async def change_password(
     data: ChangePasswordRequest,
@@ -95,6 +93,7 @@ async def change_password(
     current_user: dict = Depends(get_current_active_user),
 ):
     await auth_service.change_password(db, str(current_user["_id"]), data)
+
     asyncio.create_task(
         log_action(
             db=db,
@@ -104,7 +103,9 @@ async def change_password(
             resource_id=str(current_user["_id"]),
         )
     )
+
     return success_response(message="Password changed successfully")
+
 
 @router.get("/me")
 async def me(

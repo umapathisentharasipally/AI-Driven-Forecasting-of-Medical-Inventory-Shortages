@@ -1,6 +1,7 @@
 from typing import Any, Optional
 
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
@@ -72,27 +73,42 @@ def error_response(
         "error": {
             "code": code,
             "message": message,
-            "details": details,
+            "details": jsonable_encoder(details),
         },
         "timestamp": utc_now().isoformat(),
     }
     return JSONResponse(status_code=status_code, content=payload)
 
 
-async def app_exception_handler(request: Request, exc: AppException):
+def app_exception_handler(request: Request, exc: AppException):
     return error_response(exc.status_code, exc.error_code, exc.message, exc.details)
 
 
-async def validation_exception_handler(request: Request, exc: RequestValidationError):
-    details = exc.errors() if settings.APP_ENV == "development" else None
-    return error_response(422, "REQUEST_VALIDATION_ERROR", "Invalid request payload", details)
+def validation_exception_handler(request: Request, exc: RequestValidationError):
+    details = []
+    for error in exc.errors():
+        details.append(
+            {
+                "loc": error.get("loc"),
+                "msg": error.get("msg"),
+                "type": error.get("type"),
+                "ctx": error.get("ctx"),
+            }
+        )
+
+    return error_response(
+        422,
+        "REQUEST_VALIDATION_ERROR",
+        "Invalid request payload. See details for field-level validation errors.",
+        details,
+    )
 
 
-async def http_exception_handler(request: Request, exc: HTTPException):
+def http_exception_handler(request: Request, exc: HTTPException):
     return error_response(exc.status_code, "HTTP_ERROR", str(exc.detail), None)
 
 
-async def fallback_exception_handler(request: Request, exc: Exception):
+def fallback_exception_handler(request: Request, exc: Exception):
     logger.exception(f"Unhandled exception on {request.method} {request.url.path}: {exc}")
 
     details = str(exc) if settings.APP_ENV == "development" else None

@@ -1,11 +1,21 @@
-from pydantic import BaseModel, EmailStr, Field, field_validator
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
 
 from app.schemas.user_schema import UserResponse
 
 
 class LoginRequest(BaseModel):
-    email: EmailStr
-    password: str
+    model_config = ConfigDict(
+        extra="forbid",
+        json_schema_extra={
+            "example": {
+                "email": "user@example.com",
+                "password": "YourStrongPassword123",
+            }
+        },
+    )
+
+    email: EmailStr = Field(..., example="user@example.com")
+    password: str = Field(..., example="YourStrongPassword123")
 
 
 class TokenResponse(BaseModel):

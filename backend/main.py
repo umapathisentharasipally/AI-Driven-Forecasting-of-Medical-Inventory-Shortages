@@ -14,13 +14,56 @@ from app.api.v1.api_router import api_router
 from app.config.database import connect_db, close_db_connection, get_db_client
 from app.config.settings import settings
 from app.core.exception_handler import register_exception_handlers
+from app.core.password_handler import hash_password
+from app.core.permissions import ADMIN_ALL
 from app.db.indexes import create_all_indexes
 from app.middleware.audit_middleware import AuditMiddleware
 from app.middleware.logging_middleware import LoggingMiddleware
+from app.repositories import role_repository, user_repository
 from app.utils.date_utils import utc_now
 from app.utils.logger import get_logger
 
 logger = get_logger(__name__)
+
+
+async def ensure_admin_user() -> None:
+    if not (settings.ADMIN_EMAIL and settings.ADMIN_PASSWORD):
+        return
+
+    db = get_db_client()[settings.MONGO_DB_NAME]
+    admin_role = await role_repository.get_by_name(db, settings.ADMIN_ROLE_NAME)
+    if admin_role is None:
+        admin_role = await role_repository.create(
+            db,
+            {
+                "name": settings.ADMIN_ROLE_NAME,
+                "permissions": [ADMIN_ALL],
+                "description": "Administrator role",
+                "created_at": utc_now(),
+            },
+        )
+
+    existing_user = await user_repository.get_by_email(
+        db, str(settings.ADMIN_EMAIL).lower().strip()
+    )
+    if existing_user:
+        return
+
+    user_doc = {
+        "email": str(settings.ADMIN_EMAIL).lower().strip(),
+        "password_hash": hash_password(settings.ADMIN_PASSWORD),
+        "full_name": settings.ADMIN_FULL_NAME,
+        "employee_id": settings.ADMIN_EMPLOYEE_ID,
+        "role_id": admin_role["_id"],
+        "role_name": admin_role["name"],
+        "department": settings.ADMIN_DEPARTMENT,
+        "is_active": True,
+        "last_login": None,
+        "created_at": utc_now(),
+        "updated_at": utc_now(),
+    }
+
+    await user_repository.create(db, user_doc)
 
 
 @asynccontextmanager
@@ -60,6 +103,7 @@ async def lifespan(app: FastAPI):
     except Exception as exc:
         logger.critical(f"ML predictor initialization failed: {exc}")
     await create_all_indexes()
+    await ensure_admin_user()
     logger.info("MongoDB indexes initialized successfully")
 
     yield

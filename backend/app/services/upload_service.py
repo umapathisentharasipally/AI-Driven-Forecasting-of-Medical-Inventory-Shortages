@@ -5,8 +5,7 @@ from typing import List
 from fastapi import UploadFile
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from app.utils.validation_utils import to_object_id
-from app.repositories import inventory_repository, vendor_repositoryfrom
-from backend.app.repositories import vendor_repository 
+from app.repositories import inventory_repository, vendor_repository
 from app.schemas.upload_schema import UploadResponse
 from app.utils.date_utils import parse_date, utc_now
 from app.utils.logger import get_logger

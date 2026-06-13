@@ -1,0 +1,189 @@
+2026-06-12 17:50:11.017 | ERROR    | app.core.exception_handler:fallback_exception_handler:96 - Unhandled exception on POST /api/v1/auth/login: Object of type bytes is not JSON serializable
+Traceback (most recent call last):
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\anyio\streams\memory.py", line 98, in receive
+    return self.receive_nowait()
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\anyio\streams\memory.py", line 93, in receive_nowait
+    raise WouldBlock
+anyio.WouldBlock
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 78, in call_next
+    message = await recv_stream.receive()
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\anyio\streams\memory.py", line 118, in receive
+    raise EndOfStream
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 108, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\backend\app\middleware\logging_middleware.py", line 41, in dispatch
+    response = await call_next(request)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 84, in call_next
+    raise app_exc
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 70, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 108, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\backend\app\middleware\audit_middleware.py", line 83, in dispatch
+    response = await call_next(request)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 84, in call_next
+    raise app_exc
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 70, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 88, in __call__
+    response = await handler(request, exc)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\backend\app\core\exception_handler.py", line 88, in validation_exception_handler
+    return error_response(422, "REQUEST_VALIDATION_ERROR", "Invalid request payload", details)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\backend\app\core\exception_handler.py", line 79, in error_response
+    return JSONResponse(status_code=status_code, content=payload)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\responses.py", line 196, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\responses.py", line 55, in __init__
+    self.body = self.render(content)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\responses.py", line 199, in render
+    return json.dumps(
+  File "C:\Users\Techsupport.umapathi\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "C:\Users\Techsupport.umapathi\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "C:\Users\Techsupport.umapathi\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "C:\Users\Techsupport.umapathi\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type bytes is not JSON serializable
+2026-06-12 17:53:31.309 | ERROR    | app.core.exception_handler:fallback_exception_handler:96 - Unhandled exception on POST /api/v1/auth/login: Object of type bytes is not JSON serializable
+Traceback (most recent call last):
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\anyio\streams\memory.py", line 98, in receive
+    return self.receive_nowait()
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\anyio\streams\memory.py", line 93, in receive_nowait
+    raise WouldBlock
+anyio.WouldBlock
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 78, in call_next
+    message = await recv_stream.receive()
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\anyio\streams\memory.py", line 118, in receive
+    raise EndOfStream
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 108, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\backend\app\middleware\logging_middleware.py", line 41, in dispatch
+    response = await call_next(request)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 84, in call_next
+    raise app_exc
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 70, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 108, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\backend\app\middleware\audit_middleware.py", line 83, in dispatch
+    response = await call_next(request)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 84, in call_next
+    raise app_exc
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 70, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 88, in __call__
+    response = await handler(request, exc)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\backend\app\core\exception_handler.py", line 88, in validation_exception_handler
+    return error_response(422, "REQUEST_VALIDATION_ERROR", "Invalid request payload", details)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\backend\app\core\exception_handler.py", line 79, in error_response
+    return JSONResponse(status_code=status_code, content=payload)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\responses.py", line 196, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\responses.py", line 55, in __init__
+    self.body = self.render(content)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\responses.py", line 199, in render
+    return json.dumps(
+  File "C:\Users\Techsupport.umapathi\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "C:\Users\Techsupport.umapathi\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "C:\Users\Techsupport.umapathi\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "C:\Users\Techsupport.umapathi\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type bytes is not JSON serializable
+2026-06-12 18:01:36.832 | ERROR    | app.core.exception_handler:fallback_exception_handler:96 - Unhandled exception on POST /api/v1/auth/login: Object of type bytes is not JSON serializable
+Traceback (most recent call last):
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\anyio\streams\memory.py", line 98, in receive
+    return self.receive_nowait()
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\anyio\streams\memory.py", line 93, in receive_nowait
+    raise WouldBlock
+anyio.WouldBlock
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 78, in call_next
+    message = await recv_stream.receive()
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\anyio\streams\memory.py", line 118, in receive
+    raise EndOfStream
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 108, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\backend\app\middleware\logging_middleware.py", line 41, in dispatch
+    response = await call_next(request)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 84, in call_next
+    raise app_exc
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 70, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 108, in __call__
+    response = await self.dispatch_func(request, call_next)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\backend\app\middleware\audit_middleware.py", line 83, in dispatch
+    response = await call_next(request)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 84, in call_next
+    raise app_exc
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\base.py", line 70, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 88, in __call__
+    response = await handler(request, exc)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\backend\app\core\exception_handler.py", line 88, in validation_exception_handler
+    return error_response(422, "REQUEST_VALIDATION_ERROR", "Invalid request payload", details)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\backend\app\core\exception_handler.py", line 79, in error_response
+    return JSONResponse(status_code=status_code, content=payload)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\responses.py", line 196, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\responses.py", line 55, in __init__
+    self.body = self.render(content)
+  File "C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\.venv\Lib\site-packages\starlette\responses.py", line 199, in render
+    return json.dumps(
+  File "C:\Users\Techsupport.umapathi\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "C:\Users\Techsupport.umapathi\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "C:\Users\Techsupport.umapathi\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "C:\Users\Techsupport.umapathi\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type bytes is not JSON serializable

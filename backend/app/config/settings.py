@@ -1,6 +1,10 @@
-from typing import List
+from pathlib import Path
+from typing import List, Optional
 
+from pydantic import EmailStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+BASE_DIR = Path(__file__).resolve().parent
 
 
 class Settings(BaseSettings):
@@ -25,6 +29,13 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
 
+    ADMIN_EMAIL: Optional[EmailStr] = None
+    ADMIN_PASSWORD: Optional[str] = None
+    ADMIN_FULL_NAME: str = "Administrator"
+    ADMIN_DEPARTMENT: str = "IT"
+    ADMIN_EMPLOYEE_ID: Optional[str] = None
+    ADMIN_ROLE_NAME: str = "admin"
+
     CORS_ORIGINS: List[str] = ["http://localhost:3000"]
 
     APP_ENV: str = "development"
@@ -40,7 +51,7 @@ class Settings(BaseSettings):
     PAGE_SIZE_MAX: int = 100
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=str(BASE_DIR.parent.parent / ".env"),
         env_file_encoding="utf-8",
         case_sensitive=True,
     )
