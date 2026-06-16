@@ -63,3 +63,9 @@
 2026-06-16 13:03:32.060 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
 2026-06-16 13:03:32.116 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
 2026-06-16 13:03:45.609 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-16 13:04:07.153 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-16 13:04:08.933 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-16 13:04:11.669 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-16 13:04:11.729 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-16 13:04:12.100 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-16 13:04:37.561 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
