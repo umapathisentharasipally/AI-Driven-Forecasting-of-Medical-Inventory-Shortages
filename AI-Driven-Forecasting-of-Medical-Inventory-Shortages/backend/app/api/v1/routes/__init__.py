@@ -1,0 +1,36 @@
+
+from . import (
+	alert_routes,
+	anomaly_routes,
+	audit_log_routes,
+	auth_routes,
+	dashboard_routes,
+	export_routes,
+	inventory_routes,
+	notification_routes,
+	prediction_routes,
+	report_routes,
+	role_routes,
+	trend_routes,
+	upload_routes,
+	user_routes,
+	vendor_routes,
+)
+
+__all__ = [
+	"alert_routes",
+	"anomaly_routes",
+	"audit_log_routes",
+	"auth_routes",
+	"dashboard_routes",
+	"export_routes",
+	"inventory_routes",
+	"notification_routes",
+	"prediction_routes",
+	"report_routes",
+	"role_routes",
+	"trend_routes",
+	"upload_routes",
+	"user_routes",
+	"vendor_routes",
+]

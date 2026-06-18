@@ -1,0 +1,39 @@
+target_column: stockout_event
+date_column: snapshot_date
+id_columns:
+  - record_id
+  - item_id
+  - facility_id
+categorical_columns:
+  - facility_type
+  - department
+  - item_category
+  - item_subcategory
+  - criticality_level
+  - unit_of_measure
+  - demand_trend
+  - recent_usage_spike
+  - primary_vendor_id
+  - active_po_in_transit
+  - sole_source_item
+  - substitution_available
+  - pandemic_or_surge_flag
+numeric_columns:
+  - shelf_life_days
+  - avg_daily_usage_last_30d
+  - avg_daily_usage_last_90d
+  - usage_cv_last_90d
+  - seasonal_demand_factor
+  - current_stock_on_hand
+  - safety_stock_level
+  - days_of_supply_on_hand
+  - stock_as_pct_of_safety_level
+  - reorder_point_days
+  - days_until_next_scheduled_order
+  - vendor_reliability_score
+  - contracted_lead_time_days
+  - actual_avg_lead_time_last_6m
+  - lead_time_variability_days
+  - backorder_frequency_last_12m
+  - facility_census_pct
+  - days_since_last_stockout
