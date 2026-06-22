@@ -1,0 +1,35 @@
+:root {
+
+  --sidebar-bg:
+  #041b45;
+
+  --sidebar-bg-2:
+  #02122d;
+
+  --primary:
+  #4F46E5;
+
+  --success:
+  #10B981;
+
+  --warning:
+  #F59E0B;
+
+  --danger:
+  #EF4444;
+
+  --surface:
+  #FFFFFF;
+
+  --page:
+  #F8FAFC;
+
+  --border:
+  #E5E7EB;
+
+  --text:
+  #0F172A;
+
+  --muted:
+  #64748B;
+}

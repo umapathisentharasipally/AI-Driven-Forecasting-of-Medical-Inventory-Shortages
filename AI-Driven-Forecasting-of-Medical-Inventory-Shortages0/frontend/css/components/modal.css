@@ -1,0 +1,29 @@
+.modal {
+  border: none;
+  border-radius: 20px;
+  padding: 0;
+  overflow: hidden;
+  width: min(850px,95vw);
+}
+
+.modal::backdrop {
+  background: rgba(15,23,42,.65);
+  backdrop-filter: blur(4px);
+}
+
+.modal-header {
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.modal-footer {
+  padding: 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}

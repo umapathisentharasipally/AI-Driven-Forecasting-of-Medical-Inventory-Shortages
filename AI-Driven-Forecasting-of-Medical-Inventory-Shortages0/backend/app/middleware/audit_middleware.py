@@ -80,6 +80,9 @@ def _infer_action(method: str, path: str) -> str:
 
 class AuditMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
+        if request.method == "OPTIONS":
+            return await call_next(request)
+
         response = await call_next(request)
 
         if (

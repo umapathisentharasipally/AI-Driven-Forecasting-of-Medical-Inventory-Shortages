@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from app.config.database import get_database
+from app.core import permissions as permission_constants
 from app.core.permissions import ADMIN_ALL
 from app.core.response_handler import created_response, success_response
 from app.core.role_checker import RoleChecker
@@ -32,6 +33,30 @@ async def list_roles(
     return success_response(
         data=[role.model_dump(mode="json") for role in roles],
         message="Roles fetched successfully",
+    )
+
+
+# NOTE: this must stay registered before the "/{role_id}" route below, otherwise
+# FastAPI matches "/permissions" against "/{role_id}" first and tries (and fails)
+# to treat "permissions" as a Mongo ObjectId.
+@router.get("/permissions/")
+async def list_permissions(
+    current_user: dict = Depends(RoleChecker([ADMIN_ALL])),
+):
+    codes = sorted(
+        {
+            value
+            for name, value in vars(permission_constants).items()
+            if name.isupper() and isinstance(value, str)
+        }
+    )
+    permissions = [
+        {"code": code, "label": code.replace(":", " ").replace("_", " ").title()}
+        for code in codes
+    ]
+    return success_response(
+        data=permissions,
+        message="Permissions fetched successfully",
     )
 
 

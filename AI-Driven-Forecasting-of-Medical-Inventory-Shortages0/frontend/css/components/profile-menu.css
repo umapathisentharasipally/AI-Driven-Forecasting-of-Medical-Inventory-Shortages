@@ -1,0 +1,21 @@
+.profile-menu {
+  width: 260px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.profile-menu-header {
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.profile-menu-item {
+  padding: 14px 18px;
+  cursor: pointer;
+}
+
+.profile-menu-item:hover {
+  background: rgba(79,70,229,.05);
+}

@@ -1,0 +1,85 @@
+.badge,
+.status-badge,
+.role-badge,
+.permission-chip,
+.count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.badge,
+.status-badge {
+  padding: 6px 10px;
+}
+
+.badge-sm {
+  padding: 4px 8px;
+  font-size: 11px;
+}
+
+.badge-lg {
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+.badge-success {
+  background: #dcfce7;
+  color: #047857;
+}
+
+.badge-warning {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.badge-danger {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.badge-info {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.badge-primary {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.badge-muted {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.badge-dark {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.role-badge {
+  padding: 8px 14px;
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.permission-chip {
+  padding: 6px 10px;
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.count-badge {
+  min-width: 28px;
+  height: 28px;
+  padding: 0 9px;
+  background: #dbeafe;
+  color: #2563eb;
+}

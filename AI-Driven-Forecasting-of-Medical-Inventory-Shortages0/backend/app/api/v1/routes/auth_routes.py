@@ -4,9 +4,9 @@ from fastapi import APIRouter, Depends, Request
 from fastapi.security import (
     HTTPAuthorizationCredentials,
     HTTPBearer,
-    OAuth2PasswordRequestForm,
 )
 from motor.motor_asyncio import AsyncIOMotorDatabase
+from fastapi.security import OAuth2PasswordRequestForm
 
 from app.config.database import get_database
 from app.config.security import get_current_active_user
@@ -23,14 +23,9 @@ bearer_scheme = HTTPBearer()
 @router.post("/login")
 async def login(
     request: Request,
-    form_data: OAuth2PasswordRequestForm = Depends(),
+    data: LoginRequest,
     db: AsyncIOMotorDatabase = Depends(get_database),
 ):
-    data = LoginRequest(
-        email=form_data.username,
-        password=form_data.password,
-    )
-
     token_response = await auth_service.login(db, data)
 
     if token_response.user is not None:
@@ -47,8 +42,12 @@ async def login(
 
     return {
         "access_token": token_response.access_token,
+        "refresh_token": token_response.refresh_token,
         "token_type": "bearer",
+        "expires_in": token_response.expires_in,
+        "role": token_response.user.role_name if token_response.user else None,
     }
+
 
 
 @router.post("/refresh")
@@ -115,3 +114,20 @@ async def me(
         data=to_user_response(current_user).model_dump(mode="json"),
         message="Current user fetched successfully",
     )
+
+@router.post("/token")
+async def token_login(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    db: AsyncIOMotorDatabase = Depends(get_database),
+):
+    login_data = LoginRequest(
+        email=form_data.username,
+        password=form_data.password,
+    )
+
+    token_response = await auth_service.login(db, login_data)
+
+    return {
+        "access_token": token_response.access_token,
+        "token_type": "bearer",
+    }
