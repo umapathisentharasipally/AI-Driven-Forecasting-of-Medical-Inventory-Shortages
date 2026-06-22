@@ -1,0 +1,172 @@
+2026-06-19 11:07:24.163 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-19 11:07:28.870 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-19 11:07:34.188 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-19 11:07:34.393 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-19 11:07:53.863 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:08:01.074 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:08:01.136 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:18:27.624 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:22:05.777 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:35:26.123 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:35:31.088 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:37:04.538 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:37:05.533 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:38:38.727 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:38:38.731 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on POST /api/v1/auth/login: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+NoneType: None
+2026-06-19 11:40:12.604 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:40:40.871 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:41:30.178 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-19 11:41:36.736 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-19 11:41:39.085 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-19 11:41:41.804 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-19 11:41:41.868 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-19 11:41:54.241 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:45:52.119 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-19 11:45:57.933 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-19 11:45:59.823 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-19 11:46:02.275 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-19 11:46:02.329 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-19 11:46:58.061 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:47:11.832 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:47:21.563 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:50:12.016 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-19 11:50:13.776 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-19 11:50:16.363 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-19 11:50:16.417 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-19 11:51:14.415 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 11:51:14.417 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on POST /api/v1/auth/login: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+NoneType: None
+2026-06-19 11:51:22.841 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 12:05:49.552 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-19 12:05:52.304 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-19 12:05:54.887 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-19 12:05:55.263 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-19 12:07:33.888 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 12:07:56.114 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 12:14:04.921 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 12:17:22.926 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-19 12:17:33.700 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-19 12:17:38.854 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-19 12:17:43.813 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-19 12:17:44.017 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-19 12:22:07.390 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 12:23:49.095 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 12:27:20.512 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-19 14:53:51.438 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-19 14:53:54.290 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-19 14:53:56.755 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-19 14:53:56.814 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-19 14:54:30.071 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 14:54:39.870 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 14:55:05.764 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 14:55:48.742 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 14:56:42.815 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 14:58:18.438 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 14:58:34.010 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 14:59:27.527 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 15:00:16.142 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 15:18:00.934 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 15:18:00.958 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 15:19:09.154 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-19 15:19:13.331 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-19 15:19:16.051 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-19 15:19:18.720 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-19 15:19:18.793 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-19 15:19:18.812 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 15:19:18.812 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 15:20:45.005 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 15:28:00.214 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 15:29:43.778 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 15:34:31.141 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-19 15:34:34.696 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-19 15:34:36.378 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-19 15:34:39.520 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-19 15:34:39.586 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-19 15:34:56.178 | INFO     | app.middleware.logging_middleware:dispatch:56 - request_completed
+2026-06-19 15:41:10.647 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-19 15:41:16.388 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-19 15:41:18.462 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-19 15:41:21.211 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-19 15:41:21.275 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-19 15:41:41.709 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-19 15:41:44.992 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-19 15:41:46.544 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-19 15:41:49.228 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-19 15:41:49.308 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-19 15:50:44.511 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-19 15:50:46.555 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-19 15:53:21.425 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-19 15:53:34.119 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-19 15:53:37.522 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-19 15:53:43.961 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-19 15:53:44.149 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-19 15:54:20.352 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-19 15:54:33.032 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-19 15:56:27.280 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-19 15:56:32.403 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-19 15:56:37.609 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-19 15:56:43.866 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-19 15:56:44.014 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-19 15:56:58.413 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-19 15:57:49.204 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-19 15:57:52.019 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-19 15:57:58.789 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-19 15:57:58.930 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-19 16:02:44.842 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-19 16:06:18.347 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-19 16:06:21.660 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-19 16:06:26.314 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-19 16:06:26.518 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-19 16:07:25.596 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-19 16:08:17.652 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-19 16:20:55.874 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-19 16:57:49.630 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-19 17:06:02.427 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-19 17:06:06.599 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-19 17:06:53.582 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-19 17:08:39.976 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-19 17:12:59.560 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-19 17:20:47.279 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-19 17:43:13.945 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-20 09:53:35.398 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-20 09:53:38.310 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-20 09:53:41.068 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-20 09:53:41.134 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-20 09:53:54.862 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-20 09:53:54.899 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-20 09:54:38.461 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-20 09:54:38.465 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on POST /api/v1/auth/login: 1 validation error for LoginRequest
+password
+  String should have at least 8 characters [type=string_too_short, input_value='Admin@', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_too_short
+NoneType: None
+2026-06-20 09:56:49.559 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-20 09:57:31.457 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-20 09:57:33.967 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-20 09:57:34.761 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-20 09:58:03.735 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-20 09:58:40.689 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-20 10:10:28.887 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-20 10:10:32.509 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-20 10:10:35.182 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-20 10:10:38.093 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-20 10:10:38.153 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-20 10:10:59.554 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-20 10:20:30.096 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-20 10:20:33.909 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-20 10:20:36.223 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-20 10:20:38.939 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-20 10:20:39.003 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully
+2026-06-20 10:23:04.272 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-20 10:23:04.275 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on POST /api/v1/auth/login: 'UserResponse' object has no attribute 'role'
+NoneType: None
+2026-06-20 10:26:27.747 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-20 10:26:52.684 | INFO     | app.middleware.logging_middleware:dispatch:59 - request_completed
+2026-06-20 10:26:52.685 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on POST /api/v1/auth/login: 'UserResponse' object has no attribute 'role'
+NoneType: None
+2026-06-20 10:39:54.616 | INFO     | main:lifespan:112 - MongoDB connection closed
+2026-06-20 10:39:58.684 | INFO     | main:lifespan:74 - MongoDB connected successfully
+2026-06-20 10:40:00.905 | INFO     | main:lifespan:98 - RealtimeStockoutPredictor initialized successfully, model_version=unknown
+2026-06-20 10:40:03.607 | INFO     | app.db.indexes:create_all_indexes:214 - All MongoDB indexes created successfully
+2026-06-20 10:40:03.673 | INFO     | main:lifespan:107 - MongoDB indexes initialized successfully

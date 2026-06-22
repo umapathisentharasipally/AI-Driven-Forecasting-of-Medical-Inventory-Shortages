@@ -1,0 +1,43 @@
+@import url("./base/reset.css");
+@import url("./base/variables.css");
+@import url("./base/typography.css");
+@import url("./base/utilities.css");
+@import url("./base/animations.css");
+
+@import url("./layout/sidebar.css");
+@import url("./layout/navbar.css");
+@import url("./layout/content.css");
+@import url("./layout/grid.css");
+
+@import url("./components/buttons.css");
+@import url("./components/cards.css");
+@import url("./components/badges.css");
+@import url("./components/forms.css");
+@import url("./components/modal.css");
+@import url("./components/table.css");
+@import url("./components/dropdown.css");
+@import url("./components/pagination.css");
+@import url("./components/skeleton.css");
+@import url("./components/toast.css");
+@import url("./components/error.css");
+
+@import url("./pages/dashboard.css");
+@import url("./pages/inventory.css");
+@import url("./pages/categories.css");
+@import url("./pages/vendors.css");
+@import url("./pages/purchase-orders.css");
+@import url("./pages/stock-receipts.css");
+@import url("./pages/stock-transfers.css");
+@import url("./pages/alerts.css");
+@import url("./pages/receipts.css");
+@import url("./pages/forecasting.css");
+@import url("./pages/reports.css");
+@import url("./pages/users.css");
+@import url("./pages/admin-system.css");
+@import url("./pages/departments.css");
+@import url("./pages/notifications.css");
+@import url("./pages/profile.css");
+@import url("./pages/return-management.css");
+@import url("./pages/audit-logs.css");
+@import url("./pages/settings.css");
+@import url("./pages/login.css");

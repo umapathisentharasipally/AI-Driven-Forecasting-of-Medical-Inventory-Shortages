@@ -7,3 +7,61 @@
 2026-06-11 11:29:37.871 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: Artifact not found: artifacts\xgboost_model.pkl
 2026-06-11 11:30:09.722 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: Artifact not found: artifacts\xgboost_model.pkl
 2026-06-11 11:31:01.127 | CRITICAL | main:lifespan:39 - ML predictor initialization failed: Artifact not found: C:\Users\Techsupport.umapathi\Desktop\AI-Driven Forecasting of Medical Inventory Shortages\backend\ml\artifacts\xgboost_model.pkl
+2026-06-19 11:38:38.731 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on POST /api/v1/auth/login: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+NoneType: None
+2026-06-19 11:51:14.417 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on POST /api/v1/auth/login: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+NoneType: None
+2026-06-20 09:54:38.465 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on POST /api/v1/auth/login: 1 validation error for LoginRequest
+password
+  String should have at least 8 characters [type=string_too_short, input_value='Admin@', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_too_short
+NoneType: None
+2026-06-20 10:23:04.275 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on POST /api/v1/auth/login: 'UserResponse' object has no attribute 'role'
+NoneType: None
+2026-06-20 10:26:52.685 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on POST /api/v1/auth/login: 'UserResponse' object has no attribute 'role'
+NoneType: None
+2026-06-20 15:48:46.414 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on GET /api/v1/alerts/: 1 validation error for AlertFilter
+alert_type
+  Input should be 'stockout_risk', 'below_safety', 'expiry' or 'anomaly' [type=literal_error, input_value='critical', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+NoneType: None
+2026-06-20 15:48:52.434 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on GET /api/v1/alerts/: 1 validation error for AlertFilter
+alert_type
+  Input should be 'stockout_risk', 'below_safety', 'expiry' or 'anomaly' [type=literal_error, input_value='low_stock', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+NoneType: None
+2026-06-20 15:48:53.772 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on GET /api/v1/alerts/: 1 validation error for AlertFilter
+alert_type
+  Input should be 'stockout_risk', 'below_safety', 'expiry' or 'anomaly' [type=literal_error, input_value='expiring', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+NoneType: None
+2026-06-20 15:48:54.664 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on GET /api/v1/alerts/: 1 validation error for AlertFilter
+alert_type
+  Input should be 'stockout_risk', 'below_safety', 'expiry' or 'anomaly' [type=literal_error, input_value='pending_approval', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+NoneType: None
+2026-06-20 15:48:56.347 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on GET /api/v1/alerts/: 1 validation error for AlertFilter
+alert_type
+  Input should be 'stockout_risk', 'below_safety', 'expiry' or 'anomaly' [type=literal_error, input_value='critical', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+NoneType: None
+2026-06-22 11:16:14.742 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on GET /api/v1/alerts/: 1 validation error for AlertFilter
+alert_type
+  Input should be 'stockout_risk', 'below_safety', 'expiry' or 'anomaly' [type=literal_error, input_value='critical', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+NoneType: None
+2026-06-22 15:50:16.319 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on GET /api/v1/alerts/: 1 validation error for AlertFilter
+alert_type
+  Input should be 'stockout_risk', 'below_safety', 'expiry' or 'anomaly' [type=literal_error, input_value='critical', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+NoneType: None
+2026-06-22 16:41:59.729 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on GET /api/v1/alerts/: 1 validation error for AlertFilter
+alert_type
+  Input should be 'stockout_risk', 'below_safety', 'expiry' or 'anomaly' [type=literal_error, input_value='low_stock', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+NoneType: None
+2026-06-22 16:42:00.818 | ERROR    | app.core.exception_handler:fallback_exception_handler:112 - Unhandled exception on GET /api/v1/alerts/: 1 validation error for AlertFilter
+alert_type
+  Input should be 'stockout_risk', 'below_safety', 'expiry' or 'anomaly' [type=literal_error, input_value='expiring', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+NoneType: None

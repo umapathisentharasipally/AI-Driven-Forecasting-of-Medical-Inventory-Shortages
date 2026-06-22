@@ -1,0 +1,95 @@
+.departments-page,
+.crud-page {
+  padding: 28px;
+  min-height: 100vh;
+  background: var(--page);
+}
+
+.crud-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.crud-title-row h1 {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.crud-title-row p {
+  margin-top: 4px;
+  color: var(--muted);
+}
+
+.crud-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.toolbar-input {
+  width: 320px;
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0 14px;
+  background: var(--surface);
+}
+
+.crud-card {
+  background: var(--surface);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(15, 23, 42, .05);
+}
+
+.crud-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.crud-table th {
+  padding: 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.crud-table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.table-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  background: white;
+}
+
+.icon-btn.danger {
+  color: #ef4444;
+}
+
+.empty-row {
+  text-align: center;
+  padding: 40px;
+  color: var(--muted);
+}
+
+.delete-confirm-row {
+  background: #fff7ed;
+}

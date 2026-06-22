@@ -1,0 +1,116 @@
+.stock-receipts-page {
+  padding: 32px;
+  min-height: 100vh;
+  background: var(--page);
+}
+
+.stock-receipts-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stock-receipts-title-row h1 {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.stock-receipts-title-row p {
+  margin-top: 6px;
+  color: var(--muted);
+}
+
+.stock-receipts-toolbar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px;
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 14px;
+  margin-bottom: 22px;
+  box-shadow: 0 14px 42px rgba(15, 23, 42, 0.06);
+}
+
+.stock-receipts-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 14px 42px rgba(15, 23, 42, 0.06);
+}
+
+.stock-receipts-table {
+  width: 100%;
+  min-width: 1000px;
+  border-collapse: collapse;
+}
+
+.stock-receipts-table th {
+  padding: 14px 16px;
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--muted);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.stock-receipts-table td {
+  padding: 16px;
+  font-size: 14px;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+
+.receipt-number {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: #f1f5f9;
+  color: #334155;
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.receipt-quantity {
+  font-weight: 900;
+  color: #047857;
+}
+
+.stock-receipts-modal {
+  width: min(800px, 95vw);
+  border: none;
+  border-radius: 22px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 30px 90px rgba(15, 23, 42, 0.25);
+}
+
+.stock-receipts-modal::backdrop {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+}
+
+.stock-receipts-modal form {
+  background: var(--surface);
+  padding: 28px;
+}
+
+@media (max-width: 900px) {
+  .stock-receipts-toolbar {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .stock-receipts-page {
+    padding: 20px;
+  }
+
+  .stock-receipts-title-row {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,45 @@
+.skeleton-box,
+.skeleton-card,
+.skeleton-row {
+  position: relative;
+  overflow: hidden;
+  background: #e2e8f0;
+}
+
+.skeleton-box {
+  height: 100px;
+  border-radius: 18px;
+}
+
+.skeleton-card {
+  height: 180px;
+  border-radius: 18px;
+}
+
+.skeleton-row {
+  height: 50px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.skeleton-box::after,
+.skeleton-card::after,
+.skeleton-row::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.6),
+    transparent
+  );
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}

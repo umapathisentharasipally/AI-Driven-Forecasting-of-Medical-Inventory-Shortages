@@ -1,0 +1,41 @@
+.error-page {
+  min-height: 100vh;
+  background: var(--page);
+  display: grid;
+  place-items: center;
+  padding: 32px;
+}
+
+.error-card {
+  width: min(520px, 100%);
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 20px 70px rgba(15, 23, 42, 0.12);
+}
+
+.error-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  background: #fee2e2;
+  color: var(--danger);
+  display: grid;
+  place-items: center;
+  margin: 0 auto 20px;
+  font-weight: 900;
+  font-size: 24px;
+}
+
+.error-card h1 {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.error-card p {
+  margin: 12px 0 24px;
+  color: var(--muted);
+}

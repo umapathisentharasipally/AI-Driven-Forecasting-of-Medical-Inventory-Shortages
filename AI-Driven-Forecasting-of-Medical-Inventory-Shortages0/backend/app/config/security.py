@@ -9,7 +9,7 @@ from app.config.database import get_database
 from app.core.exception_handler import UnauthorizedException
 from app.core.jwt_handler import decode_token, verify_token_type
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/token")
 
 UserDocument = Dict[str, Any]
 

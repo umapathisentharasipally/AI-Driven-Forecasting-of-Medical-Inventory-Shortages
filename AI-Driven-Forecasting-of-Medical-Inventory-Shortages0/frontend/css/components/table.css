@@ -1,0 +1,36 @@
+.data-table,
+.crud-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1000px;
+}
+
+.data-table th,
+.data-table td,
+.crud-table th,
+.crud-table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.data-table th,
+.crud-table th {
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.table-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.empty-row {
+  text-align: center;
+  padding: 40px;
+}

@@ -11,6 +11,7 @@ from fastapi import APIRouter
 from .routes import (
     alert_routes,
     anomaly_routes,
+    analyticas_routes,
     audit_log_routes,
     auth_routes,
     category_routes,
@@ -28,6 +29,7 @@ from .routes import (
     facility_routes,
     department_routes,
     purchase_order_routes,
+    settings_routes,
     receipt_routes,
     transfer_routes,
     expiry_routes,
@@ -69,6 +71,7 @@ api_router.include_router(_get_router(department_routes, "department_routes.py")
 
 # Procurement & Stock Operations
 api_router.include_router(_get_router(purchase_order_routes, "purchase_order_routes.py"), prefix="/purchase-orders", tags=["Purchase Orders"])
+api_router.include_router(_get_router(settings_routes, "settings_routes.py"), prefix="/settings", tags=["Settings"])
 api_router.include_router(_get_router(receipt_routes, "receipt_routes.py"), prefix="/receipts", tags=["Stock Receipts"])
 api_router.include_router(_get_router(transfer_routes, "transfer_routes.py"), prefix="/transfers", tags=["Stock Transfers"])
 api_router.include_router(_get_router(expiry_routes, "expiry_routes.py"), prefix="/expiry", tags=["Expiry Management"])
@@ -101,3 +104,4 @@ api_router.include_router(_get_router(dashboard_routes, "dashboard_routes.py"), 
 # Audit Logs
 api_router.include_router(_get_router(audit_log_routes, "audit_log_routes.py"), prefix="/audit-logs", tags=["Audit Logs"]) 
 
+api_router.include_router(_get_router(analyticas_routes, "analyticas_routes.py"), prefix="/analytics", tags=["Analytics"])

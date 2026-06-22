@@ -118,16 +118,6 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=settings.CORS_ORIGINS,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-app.add_middleware(AuditMiddleware)
-app.add_middleware(LoggingMiddleware)
-
 register_exception_handlers(app)
 
 app.include_router(api_router, prefix="/api/v1")
@@ -154,3 +144,15 @@ async def health_check():
         "version": settings.APP_VERSION,
         "timestamp": utc_now().isoformat(),
     }
+
+
+app.add_middleware(AuditMiddleware)
+app.add_middleware(LoggingMiddleware)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5500"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)

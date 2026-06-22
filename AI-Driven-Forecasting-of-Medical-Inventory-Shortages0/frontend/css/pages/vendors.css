@@ -1,0 +1,116 @@
+/* Vendors uses the shared CRUD styles from categories.css */.vendors-page {
+  padding: 32px;
+  min-height: 100vh;
+  background: var(--page);
+}
+
+.vendors-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.vendors-title-row h1 {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.vendors-title-row p {
+  margin-top: 6px;
+  color: var(--muted);
+}
+
+.vendors-toolbar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  margin-bottom: 22px;
+  box-shadow: 0 14px 42px rgba(15, 23, 42, 0.06);
+}
+
+.vendors-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 14px 42px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+}
+
+.vendors-table {
+  width: 100%;
+  min-width: 960px;
+  border-collapse: collapse;
+}
+
+.vendors-table th {
+  padding: 14px 16px;
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--muted);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.vendors-table td {
+  padding: 16px;
+  font-size: 14px;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+
+.vendor-name {
+  font-weight: 900;
+}
+
+.vendor-email {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.vendor-status-active {
+  background: #dcfce7;
+  color: #047857;
+}
+
+.vendor-status-inactive {
+  background: #e5e7eb;
+  color: #475569;
+}
+
+.vendors-modal {
+  width: min(760px, 95vw);
+  border: none;
+  border-radius: 22px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 30px 90px rgba(15, 23, 42, 0.25);
+}
+
+.vendors-modal::backdrop {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+}
+
+.vendors-modal form {
+  background: var(--surface);
+  padding: 28px;
+}
+
+@media (max-width: 768px) {
+  .vendors-page {
+    padding: 20px;
+  }
+
+  .vendors-title-row,
+  .vendors-toolbar {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+}
