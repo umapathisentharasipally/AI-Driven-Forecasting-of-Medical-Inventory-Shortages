@@ -17,6 +17,38 @@ export const reportService = {
     return normalizeObject(response);
   },
 
+  async getInventorySummary(params = {}) {
+    const response = await apiRequest(`/reports/${buildQuery({
+      ...params,
+      report_type: "inventory-summary"
+    })}`);
+    return normalizeList(response);
+  },
+
+  async getStockoutRiskReport(params = {}) {
+    const response = await apiRequest(`/reports/${buildQuery({
+      ...params,
+      report_type: "stockout-risk"
+    })}`);
+    return normalizeList(response);
+  },
+
+  async getExpiryReport(params = {}) {
+    const response = await apiRequest(`/reports/${buildQuery({
+      ...params,
+      report_type: "expiry"
+    })}`);
+    return normalizeList(response);
+  },
+
+  async getPredictionReport(params = {}) {
+    const response = await apiRequest(`/reports/${buildQuery({
+      ...params,
+      report_type: "predictions"
+    })}`);
+    return normalizeList(response);
+  },
+
   generateReport(payload) {
     return apiRequest("/reports/generate", {
       method: "POST",
@@ -26,5 +58,19 @@ export const reportService = {
 
   downloadReport(id) {
     return apiRequest(`/reports/${id}/download`);
+  },
+
+  exportCsv(reportType, params = {}) {
+    return apiRequest(`/reports/export/csv${buildQuery({
+      ...params,
+      report_type: reportType
+    })}`);
+  },
+
+  exportPdf(reportType, params = {}) {
+    return apiRequest(`/reports/export/pdf${buildQuery({
+      ...params,
+      report_type: reportType
+    })}`);
   }
 };

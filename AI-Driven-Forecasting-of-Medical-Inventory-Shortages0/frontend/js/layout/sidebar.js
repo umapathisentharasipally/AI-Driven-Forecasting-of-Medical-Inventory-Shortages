@@ -27,6 +27,7 @@ const MENU_GROUPS = [
   {
     title: "ANALYTICS",
     items: [
+      { label: "Model Predictions", icon: "🧠", route: "predictions", permission: "forecasting:view" },
       { label: "Reports", icon: "📄", route: "reports", permission: "reports:view" },
       { label: "Alerts", icon: "🔔", route: "alerts", permission: "alerts:view" },
       { label: "Forecast & Trends", icon: "📈", route: "forecasting", permission: "forecasting:view" }
