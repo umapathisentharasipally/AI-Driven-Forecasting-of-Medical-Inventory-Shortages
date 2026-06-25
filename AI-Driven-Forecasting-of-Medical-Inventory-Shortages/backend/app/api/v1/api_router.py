@@ -20,6 +20,8 @@ from .routes import (
     prediction_routes,
     report_routes,
     role_routes,
+    stock_routes,
+    
     trend_routes,
     upload_routes,
     user_routes,

@@ -320,6 +320,10 @@ async function loadReport() {
       </section>
     </main>
   `;
+  console.log("activeReport:", activeReport);
+  console.log("config:", config);
+  console.log("endpoint:", config?.endpoint);
+  console.log("type:", typeof config?.endpoint);
 
   const data = await config.endpoint(cleanFilters(filters));
   reportRows = normalizeRows(data);
