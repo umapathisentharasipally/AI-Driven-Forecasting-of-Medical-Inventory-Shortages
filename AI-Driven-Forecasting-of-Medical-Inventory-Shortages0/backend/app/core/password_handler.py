@@ -15,8 +15,10 @@ def hash_password(plain: str) -> str:
 
 
 def verify_password(plain: str, hashed: str) -> bool:
-    validate_password_strength(plain)
-    return pwd_context.verify(plain, hashed)
+    try:
+        return pwd_context.verify(str(plain or "")[:72], hashed)
+    except Exception:
+        return False
 
 
 def validate_password_strength(password: str) -> bool:

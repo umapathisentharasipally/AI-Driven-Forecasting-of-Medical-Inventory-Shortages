@@ -69,8 +69,6 @@ async def ensure_admin_user() -> None:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await connect_db()
-    client = get_db_client()
-    await client.admin.command("ping")
     logger.info("MongoDB connected successfully")
 
     app.state.predictor = None
@@ -102,6 +100,7 @@ async def lifespan(app: FastAPI):
 
     except Exception as exc:
         logger.critical(f"ML predictor initialization failed: {exc}")
+
     await create_all_indexes()
     await ensure_admin_user()
     logger.info("MongoDB indexes initialized successfully")
@@ -110,7 +109,6 @@ async def lifespan(app: FastAPI):
 
     await close_db_connection()
     logger.info("MongoDB connection closed")
-
 
 app = FastAPI(
     title="Medical Inventory Forecasting API",

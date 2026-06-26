@@ -1,22 +1,26 @@
 .navbar {
-  height: 72px;
+  height: 80px;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
-  display: grid;
+  display: flex;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 24px;
-  padding: 0 24px;
+  gap: 16px;
+  padding: 0 22px;
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
-.navbar-left,
+.navbar-left{
+  width:140px;
+  flex-shrink: 0;
+}
 .navbar-right {
+  margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 5px;
 }
 
 .navbar-center {
@@ -31,12 +35,12 @@
 }
 
 .global-search-wrapper {
-  width: min(520px, 100%);
+  width: min(450px, 70%);
   position: relative;
 }
 
 .global-search {
-  width: 100%;
+  width: 70%;
   height: 44px;
   border: 1px solid var(--border);
   border-radius: 14px;
@@ -98,7 +102,7 @@
 }
 
 .profile-button {
-  min-width: 170px;
+  min-width: 120px;
   height: 44px;
   border: 1px solid var(--border);
   border-radius: 14px;
