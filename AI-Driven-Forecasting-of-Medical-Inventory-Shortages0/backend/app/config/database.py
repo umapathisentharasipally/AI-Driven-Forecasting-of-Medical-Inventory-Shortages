@@ -1,5 +1,6 @@
 from typing import Optional
 
+import certifi
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 
 from app.config.settings import settings
@@ -11,8 +12,18 @@ _database: Optional[AsyncIOMotorDatabase] = None
 
 async def connect_db() -> None:
     global _client, _database
+
     if _client is None:
-        _client = AsyncIOMotorClient(settings.mongo_uri)
+        _client = AsyncIOMotorClient(
+            settings.mongo_uri,
+            tls=True,
+            tlsCAFile=certifi.where(),
+            serverSelectionTimeoutMS=30000,
+            connectTimeoutMS=30000,
+            socketTimeoutMS=30000,
+        )
+
+        await _client.admin.command("ping")
         _database = _client[settings.MONGO_DB_NAME]
 
 
@@ -25,15 +36,19 @@ def get_db_client() -> AsyncIOMotorClient:
 async def get_database() -> AsyncIOMotorDatabase:
     if _database is None:
         await connect_db()
+
     if _database is None:
         raise DatabaseException("Database is not initialized")
+
     return _database
 
 
 async def close_db_connection() -> None:
     global _client, _database
+
     if _client is not None:
         _client.close()
+
     _client = None
     _database = None
 

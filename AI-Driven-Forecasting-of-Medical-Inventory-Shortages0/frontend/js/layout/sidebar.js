@@ -11,7 +11,6 @@ const MENU_GROUPS = [
     title: "INVENTORY MANAGEMENT",
     items: [
       { label: "Inventory Items", icon: "📦", route: "inventory", permission: "inventory:view" },
-      { label: "Add Item", icon: "+", route: "inventory", permission: "inventory:create" },
       { label: "Categories", icon: "▦", route: "categories", permission: "categories:view" },
       { label: "Vendors", icon: "🚚", route: "vendors", permission: "vendors:view" }
     ]
@@ -27,7 +26,7 @@ const MENU_GROUPS = [
   {
     title: "ANALYTICS",
     items: [
-      { label: "Model Predictions", icon: "🧠", route: "predictions", permission: "forecasting:view" },
+      { label: "Model Predictions", icon: "🧠", route: "model-predictions", permission: "forecasting:view" },
       { label: "Reports", icon: "📄", route: "reports", permission: "reports:view" },
       { label: "Alerts", icon: "🔔", route: "alerts", permission: "alerts:view" },
       { label: "Forecast & Trends", icon: "📈", route: "forecasting", permission: "forecasting:view" }

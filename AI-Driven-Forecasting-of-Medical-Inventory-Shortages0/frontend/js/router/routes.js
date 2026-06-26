@@ -64,6 +64,10 @@ export const ROUTES = {
     permission: "reports:view",
     render: renderReports
   },
+  "model-predictions": {
+    permission: "forecasting:view",
+    render: renderForecasting
+  },
 
   alerts: {
     permission: "alerts:view",
