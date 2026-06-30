@@ -176,29 +176,76 @@ function renderModal() {
 
         <div class="form-grid">
           <label>
-            Vendor Name
-            <input name="name" type="text" />
-            <small data-error="name"></small>
+          Vendor Code
+          <input name="vendor_code" />
           </label>
 
           <label>
-            Contact Email
-            <input name="contact_email" type="email" />
-            <small data-error="contact_email"></small>
+          Vendor Name
+          <input name="name" />
           </label>
 
           <label>
-            Phone
-            <input name="phone" type="text" />
-            <small data-error="phone"></small>
+          Email
+          <input name="contact_email" type="email" />
           </label>
 
           <label>
-            Lead Time Days
-            <input name="lead_time_days" type="number" min="1" />
-            <small data-error="lead_time_days"></small>
+          Phone
+          <input name="contact_phone" />
           </label>
 
+          <label>
+          Lead Time
+          <input
+              name="avg_lead_time_days"
+              type="number"
+          />
+          </label>
+
+          <label>
+          Reliability Score
+          <input
+              name="reliability_score"
+              type="number"
+              step="0.1"
+              min="0"
+              max="100"
+          />
+          </label>
+
+          <label>
+          Contract Expiry
+          <input
+              name="contract_expiry"
+              type="date"
+          />
+          </label>
+
+          <label>
+          Street
+          <input name="street" />
+          </label>
+
+          <label>
+          City
+          <input name="city" />
+          </label>
+
+          <label>
+          State
+          <input name="state" />
+          </label>
+
+          <label>
+          Country
+          <input name="country" />
+          </label>
+
+          <label>
+          Pincode
+          <input name="pincode" />
+          </label>
           <label>
             Status
             <select name="active">
@@ -329,11 +376,22 @@ function getPayload(form) {
   const data = Object.fromEntries(new FormData(form).entries());
 
   return {
-    name: data.name.trim(),
-    contact_email: data.contact_email.trim(),
-    phone: data.phone?.trim() || null,
-    lead_time_days: Number(data.lead_time_days),
-    active: data.active === "true"
+    vendor_code: (data.vendor_code || "").trim(),
+    name: (data.name || "").trim(),
+    contact_email: (data.contact_email || "").trim(),
+    contact_phone: (data.contact_phone || "").trim() || null,
+    avg_lead_time_days: Number(data.avg_lead_time_days || 0),
+    reliability_score: Number(data.reliability_score || 0),
+    contract_expiry: data.contract_expiry
+      ? new Date(data.contract_expiry).toISOString()
+      : null,
+    address: {
+      street: (data.street || "").trim(),
+      city: (data.city || "").trim(),
+      state: (data.state || "").trim(),
+      country: (data.country || "").trim(),
+      pincode: (data.pincode || "").trim()
+    }
   };
 }
 

@@ -13,7 +13,7 @@ function list(response) {
 
 export const dashboardService = {
   async getAdminDashboard() {
-    const response = await apiRequest("/dashboard/admin");
+    const response = await apiRequest(getRoleDashboardEndpoint());
     return unwrap(response);
   },
 
@@ -121,3 +121,17 @@ export const dashboardService = {
     };
   }
 };
+function getRoleDashboardEndpoint() {
+  const role = localStorage.getItem("role") || "viewer";
+
+  const map = {
+    admin: "/dashboard/admin",
+    supply_manager: "/dashboard/supply-manager",
+    inventory_manager: "/dashboard/inventory-manager",
+    analyst: "/dashboard/analyst",
+    pharmacist: "/dashboard/pharmacist",
+    viewer: "/dashboard/viewer"
+  };
+
+  return map[role] || "/dashboard/viewer";
+}
