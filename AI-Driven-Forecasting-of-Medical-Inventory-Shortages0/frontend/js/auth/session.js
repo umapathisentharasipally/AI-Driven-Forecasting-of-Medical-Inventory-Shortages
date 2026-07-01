@@ -1,4 +1,5 @@
 import { CONFIG } from "../config/config.js";
+import { apiRequest } from "../services/api.client.js";
 
 export function saveSession(data) {
   localStorage.setItem(CONFIG.TOKEN_KEY, data.access_token);
@@ -12,6 +13,44 @@ export function saveSession(data) {
 
 export function isAuthenticated() {
   return Boolean(localStorage.getItem(CONFIG.TOKEN_KEY));
+}
+
+/**
+ * Verify that the stored token is actually valid by calling the backend
+ * This prevents accessing the app with a stale/expired token
+ */
+export async function isTokenValid() {
+  try {
+    if (!isAuthenticated()) {
+      return false;
+    }
+
+    // Make a request to the /auth/me endpoint which requires valid token
+    const response = await fetch(`${window.MEDINV_CONFIG?.API_BASE_URL || "/api/v1"}/auth/me`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem(CONFIG.TOKEN_KEY)}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    // If 401, token is invalid
+    if (response.status === 401) {
+      clearSession();
+      return false;
+    }
+
+    // If any other error, also clear session
+    if (!response.ok) {
+      clearSession();
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Token validation error:", error);
+    clearSession();
+    return false;
+  }
 }
 
 export function clearSession() {
@@ -45,6 +84,7 @@ export function redirectByRole(role) {
 }
 export function logout() {
   clearSession();
+  // Reload to ensure clean state
   window.location.hash = "#login";
   window.location.reload();
 }

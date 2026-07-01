@@ -8,6 +8,12 @@ from app.services import alert_service
 from fastapi import UploadFile
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
+from uuid import uuid4
+from app.streaming.kafka_producer import kafka_producer
+from app.streaming.event_schema import KafkaEvent
+from app.streaming.topics import INVENTORY_EVENTS_TOPIC
+
+
 from app.core.exception_handler import ConflictException, NotFoundException, ValidationException
 from app.repositories import inventory_repository, vendor_repository
 from app.schemas.inventory_schema import (
@@ -56,7 +62,11 @@ def _calculate_days_of_supply(current_stock: float, avg_daily_usage: float) -> f
 
 def _calculate_stock_as_pct_of_safety(current_stock: float, safety_stock: float) -> float:
     return _safe_divide(current_stock, safety_stock) * 100
-
+async def publish_inventory_event(event: KafkaEvent) -> None:
+    try:
+        await kafka_producer.publish(INVENTORY_EVENTS_TOPIC, event)
+    except Exception as exc:
+        logger.error(f"Failed to publish inventory event: {exc}")
 
 def to_inventory_response(item: dict) -> InventoryItemResponse:
     return InventoryItemResponse(
@@ -127,6 +137,22 @@ async def create_item(
     item_doc["updated_at"] = now
 
     created = await inventory_repository.create(db, item_doc)
+    await publish_inventory_event(
+        KafkaEvent(
+            event_id=str(uuid4()),
+            event_type="INVENTORY_CREATED",
+            entity="inventory",
+            entity_id=str(created["_id"]),
+            payload={
+                "item_id": created.get("item_id"),
+                "item_name": created.get("item_name"),
+                "facility_id": created.get("facility_id"),
+                "category": created.get("category"),
+                "current_stock": float(created.get("current_stock_on_hand", 0)),
+                "safety_stock": float(created.get("safety_stock_level", 0)),
+            },
+        ),
+    )
     return to_inventory_response(created)
 
 
@@ -196,7 +222,22 @@ async def update_item(
     updated = await inventory_repository.update(db, id, update_data)
     if not updated:
         raise NotFoundException("Inventory item not found")
-
+    await publish_inventory_event(
+        KafkaEvent(
+            event_id=str(uuid4()),
+            event_type="INVENTORY_UPDATED",
+            entity="inventory",
+            entity_id=str(updated["_id"]),
+            payload={
+                "item_id": updated.get("item_id"),
+                "item_name": updated.get("item_name"),
+                "facility_id": updated.get("facility_id"),
+                "category": updated.get("category"),
+                "current_stock": float(updated.get("current_stock_on_hand", 0)),
+                "safety_stock": float(updated.get("safety_stock_level", 0)),
+            },
+        ),
+    )
     return to_inventory_response(updated)
 
 
@@ -211,7 +252,20 @@ async def delete_item(
     deleted = await inventory_repository.delete(db, id)
     if not deleted:
         raise NotFoundException("Inventory item not found")
-
+    await publish_inventory_event(
+        KafkaEvent(
+            event_id=str(uuid4()),
+            event_type="INVENTORY_DELETED",
+            entity="inventory",
+            entity_id=str(existing["_id"]),
+            payload={
+                "item_id": existing.get("item_id"),
+                "item_name": existing.get("item_name"),
+                "facility_id": existing.get("facility_id"),
+                "category": existing.get("category"),
+            },
+        ),
+    )
 
 async def adjust_stock(
     db: AsyncIOMotorDatabase,
@@ -237,7 +291,25 @@ async def adjust_stock(
 
     if not updated:
         raise NotFoundException("Inventory item not found")
-
+    await publish_inventory_event(
+        KafkaEvent(
+            event_id=str(uuid4()),
+            event_type="STOCK_ADJUSTED",
+            entity="inventory",
+            entity_id=str(updated["_id"]),
+            user_id=current_user_id,
+            payload={
+                "item_id": updated.get("item_id"),
+                "item_name": updated.get("item_name"),
+                "facility_id": updated.get("facility_id"),
+                "category": updated.get("category"),
+                "adjustment_type": data.adjustment_type,
+                "delta": float(data.delta),
+                "current_stock": float(updated.get("current_stock_on_hand", 0)),
+                "safety_stock": float(updated.get("safety_stock_level", 0)),
+            },
+        ),
+    )
     if data.adjustment_type == "usage":
         now = utc_now()
         await db["consumption_logs"].insert_one(
@@ -335,7 +407,8 @@ def _build_csv_item(row: dict) -> dict:
         ),
         "reorder_point": float(row["reorder_point"]),
         "reorder_quantity": float(row["reorder_quantity"]),
-        "vendor_id": to_object_id(row["vendor_id"].strip()),        "vendor_reliability_score": float(row["vendor_reliability_score"]),
+        "vendor_id": to_object_id(row["vendor_id"].strip()),        
+        "vendor_reliability_score": float(row["vendor_reliability_score"]),
         "actual_avg_lead_time_last_6m": float(row["actual_avg_lead_time_last_6m"]),
         "lead_time_variability_days": float(row["lead_time_variability_days"]),
         "backorder_frequency_last_12m": float(row["backorder_frequency_last_12m"]),

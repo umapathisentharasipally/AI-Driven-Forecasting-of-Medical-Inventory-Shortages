@@ -4,9 +4,13 @@ import {
   createLineChart,
   createDoughnutChart
 } from "../../utils/chart-utils.js";
+import { renderSupplyManagerDashboard } from "./supply-manager-dashboard.view.js";
+import { renderAnalystDashboard } from "./analyst-dashboard.view.js";
+import { renderViewerDashboard } from "./viewer-dashboard.view.js";
 
 const view = document.getElementById("app");
 
+// Utility functions
 function formatNumber(value) {
   return new Intl.NumberFormat("en-US").format(value);
 }
@@ -15,7 +19,6 @@ function formatCurrency(value) {
   if (value >= 1000000) {
     return `$ ${(value / 1000000).toFixed(2)}M`;
   }
-
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD"
@@ -28,7 +31,6 @@ function badge(level) {
     Medium: "badge-warning",
     Low: "badge-info"
   };
-
   return `<span class="badge ${styles[level] || "badge-info"}">${level}</span>`;
 }
 
@@ -36,13 +38,11 @@ function skeletonDashboard() {
   view.innerHTML = `
     <main class="dashboard-page">
       <div class="dashboard-header skeleton-box"></div>
-
       <section class="kpi-grid">
         ${Array.from({ length: 6 })
           .map(() => `<div class="dashboard-card skeleton-card"></div>`)
           .join("")}
       </section>
-
       <section class="dashboard-grid-3">
         <div class="dashboard-card skeleton-chart"></div>
         <div class="dashboard-card skeleton-chart"></div>
@@ -99,7 +99,6 @@ function renderKpiCards(stats) {
           <div class="kpi-icon ${card.color}">
             ${card.icon}
           </div>
-
           <div>
             <p class="kpi-label">${card.label}</p>
             <h3 class="kpi-value">${card.value}</h3>
@@ -119,13 +118,11 @@ function renderRiskLegend(risk) {
         High Risk
         <strong>${risk.high.count} (${risk.high.percentage}%)</strong>
       </div>
-
       <div>
         <span class="legend-dot warning"></span>
         Medium Risk
         <strong>${risk.medium.count} (${risk.medium.percentage}%)</strong>
       </div>
-
       <div>
         <span class="legend-dot success"></span>
         Low Risk
@@ -145,9 +142,7 @@ function renderTopRiskItems(items) {
             <strong>${index + 1}. ${item.name}</strong>
             <small>${item.category}</small>
           </td>
-
           <td>${badge(item.risk_level)}</td>
-
           <td>
             <span>${item.stockout_probability}</span>
             <div class="risk-bar">
@@ -167,12 +162,10 @@ function renderAlerts(alerts) {
       alert => `
         <div class="alert-row">
           <div class="alert-icon ${alert.severity.toLowerCase()}">⚠</div>
-
           <div>
             <strong>${alert.title}</strong>
             <p>${alert.description}</p>
           </div>
-
           ${badge(alert.severity)}
         </div>
       `
@@ -182,7 +175,6 @@ function renderAlerts(alerts) {
 
 function renderCategoryLegend(categories) {
   const colors = ["#6366F1", "#F59E0B", "#10B981", "#3B82F6", "#94A3B8"];
-
   return categories
     .map(
       (category, index) => `
@@ -219,25 +211,21 @@ function renderSystemStats(stats) {
       <h4>${stats.facilities}</h4>
       <p>Active Facilities</p>
     </article>
-
     <article>
       <span>🚚</span>
       <h4>${stats.vendors}</h4>
       <p>Active Vendors</p>
     </article>
-
     <article>
       <span>🏢</span>
       <h4>${stats.departments}</h4>
       <p>Active Departments</p>
     </article>
-
     <article>
       <span>👥</span>
       <h4>${stats.users}</h4>
       <p>System Users</p>
     </article>
-
     <article>
       <span>✅</span>
       <h4>System Status</h4>
@@ -246,7 +234,8 @@ function renderSystemStats(stats) {
   `;
 }
 
-export async function renderDashboard() {
+// ADMIN DASHBOARD
+async function renderAdminDashboard() {
   destroyCharts();
   skeletonDashboard();
 
@@ -272,16 +261,19 @@ export async function renderDashboard() {
 
   view.innerHTML = `
     <main class="dashboard-page">
-
       <section class="dashboard-title-row">
         <div>
-          <h1>Admin Dashboard</h1>
-          <p>Overview of system performance and key metrics</p>
+          <h1>👨‍💼 Admin Dashboard</h1>
+          <p>Complete system overview and controls</p>
+          <div class="dashboard-actions">
+            <button id="runMlPredictionsBtn" class="primary-btn">
+              🧠 Run ML Predictions
+            </button>
+            <button class="date-filter">
+              📅 May 15 – May 21, 2025
+            </button>
+          </div>
         </div>
-
-        <button class="date-filter">
-          📅 May 15 – May 21, 2025
-        </button>
       </section>
 
       <section class="kpi-grid">
@@ -298,7 +290,6 @@ export async function renderDashboard() {
               <option value="3m">3 Months</option>
             </select>
           </div>
-
           <div class="chart-box">
             <canvas id="inventoryTrendChart"></canvas>
           </div>
@@ -307,13 +298,10 @@ export async function renderDashboard() {
         <article class="dashboard-card">
           <div class="card-header">
             <h3>Stockout Risk Distribution</h3>
-            <span>ⓘ</span>
           </div>
-
           <div class="chart-box small">
             <canvas id="riskChart"></canvas>
           </div>
-
           ${renderRiskLegend(risk)}
         </article>
 
@@ -322,7 +310,6 @@ export async function renderDashboard() {
             <h3>Top 5 High Risk Items</h3>
             <a href="#">View All</a>
           </div>
-
           <table class="dashboard-table">
             <thead>
               <tr>
@@ -344,7 +331,6 @@ export async function renderDashboard() {
             <h3>Alerts Summary</h3>
             <a href="#">View All</a>
           </div>
-
           ${renderAlerts(alerts)}
         </article>
 
@@ -352,12 +338,10 @@ export async function renderDashboard() {
           <div class="card-header">
             <h3>Inventory by Category</h3>
           </div>
-
           <div class="category-layout">
             <div class="chart-box small">
               <canvas id="categoryChart"></canvas>
             </div>
-
             <div class="category-legend">
               ${renderCategoryLegend(categories)}
             </div>
@@ -369,7 +353,6 @@ export async function renderDashboard() {
             <h3>Recent Predictions</h3>
             <a href="#">View All</a>
           </div>
-
           <table class="dashboard-table">
             <thead>
               <tr>
@@ -379,7 +362,6 @@ export async function renderDashboard() {
                 <th>Risk</th>
               </tr>
             </thead>
-
             <tbody>
               ${renderPredictions(predictions)}
             </tbody>
@@ -390,10 +372,54 @@ export async function renderDashboard() {
       <section class="system-stats-row">
         ${renderSystemStats(systemStats)}
       </section>
-
     </main>
   `;
 
+  // Event listeners
+  document
+    .getElementById("runMlPredictionsBtn")
+    ?.addEventListener("click", async () => {
+      const btn = document.getElementById("runMlPredictionsBtn");
+      try {
+        btn.disabled = true;
+        btn.textContent = "Running ML...";
+        await dashboardService.runBatchPredictions();
+        btn.textContent = "Refreshing...";
+        await renderAdminDashboard();
+      } catch (error) {
+        console.error("ML prediction run failed:", error);
+        btn.disabled = false;
+        btn.textContent = "🧠 Run ML Predictions";
+        alert("ML prediction failed. Check backend logs.");
+      }
+    });
+
+  document
+    .getElementById("trendPeriod")
+    ?.addEventListener("change", async event => {
+      const newTrend =
+        await dashboardService.getInventoryValueTrend(event.target.value);
+      destroyCharts();
+      createLineChart(
+        "inventoryTrendChart",
+        newTrend.labels,
+        newTrend.values
+      );
+      createDoughnutChart(
+        "riskChart",
+        ["High Risk", "Medium Risk", "Low Risk"],
+        [risk.high.count, risk.medium.count, risk.low.count],
+        ["#EF4444", "#F59E0B", "#10B981"]
+      );
+      createDoughnutChart(
+        "categoryChart",
+        categories.map(item => item.name),
+        categories.map(item => item.item_count),
+        ["#6366F1", "#F59E0B", "#10B981", "#3B82F6", "#94A3B8"]
+      );
+    });
+
+  // Initialize charts
   createLineChart(
     "inventoryTrendChart",
     trend.labels,
@@ -403,11 +429,7 @@ export async function renderDashboard() {
   createDoughnutChart(
     "riskChart",
     ["High Risk", "Medium Risk", "Low Risk"],
-    [
-      risk.high.count,
-      risk.medium.count,
-      risk.low.count
-    ],
+    [risk.high.count, risk.medium.count, risk.low.count],
     ["#EF4444", "#F59E0B", "#10B981"]
   );
 
@@ -417,37 +439,33 @@ export async function renderDashboard() {
     categories.map(item => item.item_count),
     ["#6366F1", "#F59E0B", "#10B981", "#3B82F6", "#94A3B8"]
   );
+}
 
-  document
-    .getElementById("trendPeriod")
-    .addEventListener("change", async event => {
-      const newTrend =
-        await dashboardService.getInventoryValueTrend(event.target.value);
+// MAIN DASHBOARD ROUTER
+export async function renderDashboard() {
+  try {
+    // Get user info from localStorage
+    const userStr = localStorage.getItem("user");
+    const userRole = userStr ? JSON.parse(userStr).role : "viewer";
 
-      destroyCharts();
+    console.log(`[Dashboard Router] Rendering dashboard for role: ${userRole}`);
 
-      createLineChart(
-        "inventoryTrendChart",
-        newTrend.labels,
-        newTrend.values
-      );
-
-      createDoughnutChart(
-        "riskChart",
-        ["High Risk", "Medium Risk", "Low Risk"],
-        [
-          risk.high.count,
-          risk.medium.count,
-          risk.low.count
-        ],
-        ["#EF4444", "#F59E0B", "#10B981"]
-      );
-
-      createDoughnutChart(
-        "categoryChart",
-        categories.map(item => item.name),
-        categories.map(item => item.item_count),
-        ["#6366F1", "#F59E0B", "#10B981", "#3B82F6", "#94A3B8"]
-      );
-    });
+    // Route to role-specific dashboard
+    switch (userRole?.toLowerCase()) {
+      case "admin":
+        return renderAdminDashboard();
+      case "supply_manager":
+      case "supply-manager":
+        return renderSupplyManagerDashboard();
+      case "analyst":
+        return renderAnalystDashboard();
+      case "viewer":
+      default:
+        return renderViewerDashboard();
+    }
+  } catch (error) {
+    console.error("Dashboard render error:", error);
+    // Fallback to viewer dashboard
+    return renderViewerDashboard();
+  }
 }

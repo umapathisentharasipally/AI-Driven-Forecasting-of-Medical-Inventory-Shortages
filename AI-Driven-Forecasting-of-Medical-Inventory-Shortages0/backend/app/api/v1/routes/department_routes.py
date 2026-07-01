@@ -19,7 +19,9 @@ async def _ensure_indexes():
     await db["departments"].create_index([("name", ASCENDING)])
 
 @router.post("/")
-async def create_department(data: DepartmentCreate, db: AsyncIOMotorDatabase = Depends(get_database), current_user: dict = Depends(RoleChecker([ADMIN_ALL]))):
+async def create_department(data: DepartmentCreate, 
+                            db: AsyncIOMotorDatabase = Depends(get_database), 
+                            current_user: dict = Depends(RoleChecker([ADMIN_ALL]))):
     payload = data.model_dump()
     payload.update({"created_at": utc_now(), "updated_at": utc_now()})
     try:
@@ -32,7 +34,12 @@ async def create_department(data: DepartmentCreate, db: AsyncIOMotorDatabase = D
     return created_response(serialize_doc(doc), "Department created successfully")
 
 @router.get("/")
-async def list_departments(search: str | None = Query(None), is_active: bool | None = Query(None), page: int = Query(1, ge=1), limit: int = Query(20, ge=1, le=100), db: AsyncIOMotorDatabase = Depends(get_database), current_user: dict = Depends(RoleChecker([INVENTORY_READ]))):
+async def list_departments(search: str | None = Query(None), 
+                           is_active: bool | None = Query(None), 
+                           page: int = Query(1, ge=1), 
+                           limit: int = Query(20, ge=1, le=100), 
+                           db: AsyncIOMotorDatabase = Depends(get_database), 
+                           current_user: dict = Depends(RoleChecker([INVENTORY_READ]))):
     page, skip = paging_params(page, limit)
     query = {}
     if is_active is not None:
@@ -45,14 +52,19 @@ async def list_departments(search: str | None = Query(None), is_active: bool | N
     return paginated_response([serialize_doc(d) for d in docs], total, page, limit, "Departments fetched successfully")
 
 @router.get("/{id}")
-async def get_department(id: str, db: AsyncIOMotorDatabase = Depends(get_database), current_user: dict = Depends(RoleChecker([INVENTORY_READ]))):
+async def get_department(id: str, 
+                         db: AsyncIOMotorDatabase = Depends(get_database), 
+                         current_user: dict = Depends(RoleChecker([INVENTORY_READ]))):
     doc = await db["departments"].find_one({"_id": validate_object_id(id)})
     if not doc:
         raise NotFoundException("Department not found")
     return success_response(serialize_doc(doc), "Department fetched successfully")
 
 @router.patch("/{id}")
-async def update_department(id: str, data: DepartmentUpdate, db: AsyncIOMotorDatabase = Depends(get_database), current_user: dict = Depends(RoleChecker([ADMIN_ALL]))):
+async def update_department(id: str, 
+                            data: DepartmentUpdate, 
+                            db: AsyncIOMotorDatabase = Depends(get_database), 
+                            current_user: dict = Depends(RoleChecker([ADMIN_ALL]))):
     payload = {k: v for k, v in data.model_dump(exclude_unset=True).items() if v is not None}
     payload["updated_at"] = utc_now()
     res = await db["departments"].update_one({"_id": validate_object_id(id)}, {"$set": payload})
@@ -61,7 +73,9 @@ async def update_department(id: str, data: DepartmentUpdate, db: AsyncIOMotorDat
     return success_response(serialize_doc(await db["departments"].find_one({"_id": validate_object_id(id)})), "Department updated successfully")
 
 @router.delete("/{id}")
-async def deactivate_department(id: str, db: AsyncIOMotorDatabase = Depends(get_database), current_user: dict = Depends(RoleChecker([ADMIN_ALL]))):
+async def deactivate_department(id: str, 
+                                db: AsyncIOMotorDatabase = Depends(get_database), 
+                                current_user: dict = Depends(RoleChecker([ADMIN_ALL]))):
     res = await db["departments"].update_one({"_id": validate_object_id(id)}, {"$set": {"is_active": False, "updated_at": utc_now()}})
     if res.matched_count == 0:
         raise NotFoundException("Department not found")

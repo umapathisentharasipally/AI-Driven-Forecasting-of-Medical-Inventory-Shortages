@@ -1,4 +1,4 @@
-import { isAuthenticated } from "./auth/session.js";
+import { isAuthenticated, isTokenValid } from "./auth/session.js";
 import { navigateTo } from "./router/router.js";
 import { renderLayout } from "./layout/layout.js";
 import { applySavedTheme, toggleTheme } from "./components/theme.js";
@@ -29,7 +29,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  if (!isAuthenticated()) {
+  // Check if user has a token AND if that token is actually valid
+  const hasToken = isAuthenticated();
+  const tokenIsValid = hasToken ? await isTokenValid() : false;
+
+  if (!tokenIsValid) {
     hideAppShell();
     await navigateTo("login");
     return;

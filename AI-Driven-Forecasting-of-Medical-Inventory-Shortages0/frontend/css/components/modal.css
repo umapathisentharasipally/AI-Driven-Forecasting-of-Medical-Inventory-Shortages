@@ -27,3 +27,36 @@
   justify-content: flex-end;
   gap: 12px;
 }
+.crud-modal {
+    width: min(900px, 90vw);
+    max-width: 900px;
+    max-height: 90vh;      /* Limit modal height */
+    overflow-y: auto;      /* Entire modal scrolls */
+    overflow-x: hidden;
+    border: none;
+    border-radius: 20px;
+    padding: 32px;
+    background: #fff;
+}
+
+.modal-actions {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    padding: 18px 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.modal-actions .btn {
+    min-width: 130px;
+}
+#vendorModal.crud-modal {
+  width: min(900px, 92vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+}

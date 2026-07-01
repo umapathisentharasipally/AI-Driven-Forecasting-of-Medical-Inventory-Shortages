@@ -112,7 +112,12 @@ async def _inventory_counts(db: AsyncIOMotorDatabase):
     high_risk = await db["predictions"].count_documents({"risk_level": {"$in": ["high", "High"]}})
     value_pipe = [{"$group": {"_id": None, "value": {"$sum": {"$multiply": [{"$ifNull": ["$current_stock", 0]}, {"$ifNull": ["$unit_price", 0]}]}}}}]
     val = await db["inventory_items"].aggregate(value_pipe).to_list(1)
-    return {"total_inventory_items": total, "total_inventory_value": round(val[0]["value"], 2) if val else 0, "low_stock_items": low, "out_of_stock_items": out, "critical_items": critical, "active_alerts": active_alerts, "high_stockout_risk": high_risk}
+    return {"total_inventory_items": total, 
+            "total_inventory_value": round(val[0]["value"], 2) if val else 0, 
+            "low_stock_items": low, "out_of_stock_items": out, 
+            "critical_items": critical, 
+            "active_alerts": active_alerts, 
+            "high_stockout_risk": high_risk}
 
 async def _recent(db, collection, limit=5):
     return [serialize_doc(d) for d in await db[collection].find({}).sort("created_at", -1).limit(limit).to_list(limit)]
@@ -134,14 +139,34 @@ async def _top_risk(db, limit=5):
     return [serialize_doc(d) for d in await db["predictions"].aggregate(pipe).to_list(limit)]
 
 @router.get("/admin")
-async def admin_dashboard(db: AsyncIOMotorDatabase = Depends(get_database), current_user: dict = Depends(RoleChecker([PREDICTION_READ]))):
+async def admin_dashboard(db: AsyncIOMotorDatabase = Depends(get_database), 
+                          current_user: dict = Depends(RoleChecker([ADMIN_ALL]))):
     metrics = await _inventory_counts(db)
-    data = {"metrics": {**metrics, "facilities": await db["facilities"].count_documents({"is_active": {"$ne": False}}), "vendors": await db["vendors"].count_documents({"is_active": {"$ne": False}}), "departments": await db["departments"].count_documents({"is_active": {"$ne": False}}), "users": await db["users"].count_documents({"is_active": {"$ne": False}})}, "inventory_status": await _inventory_status(db), "category_distribution": await _category_distribution(db), "top_risk_items": await _top_risk(db), "recent_predictions": await _recent(db, "predictions"), "recent_alerts": await _recent(db, "alerts"), "system_status": {"status": "operational"}}
+    data = {"metrics": {**metrics,"facilities": await db["facilities"].count_documents({"is_active": {"$ne": False}}),
+                        "vendors": await db["vendors"].count_documents({"is_active": {"$ne": False}}), 
+                        "departments": await db["departments"].count_documents({"is_active": {"$ne": False}}), 
+                        "users": await db["users"].count_documents({"is_active": {"$ne": False}})}, 
+                        "inventory_status": await _inventory_status(db), 
+                        "category_distribution": await _category_distribution(db), 
+                        "top_risk_items": await _top_risk(db), 
+                        "recent_predictions": await _recent(db, "predictions"), 
+                        "recent_alerts": await _recent(db, "alerts"), 
+                        "system_status": {"status": "operational"}}
     return success_response(data, "Admin dashboard fetched successfully")
 
 @router.get("/supply-manager")
-async def supply_manager_dashboard(db: AsyncIOMotorDatabase = Depends(get_database), current_user: dict = Depends(RoleChecker([INVENTORY_READ]))):
-    data = {"metrics": {**await _inventory_counts(db), "pending_purchase_orders": await db["purchase_orders"].count_documents({"status": "pending"}), "pending_receipts": await db["stock_receipts"].count_documents({})}, "inventory_status": await _inventory_status(db), "pending_purchase_orders": await _recent(db, "purchase_orders"), "expiring_items": [serialize_doc(d) for d in await db["inventory_batches"].find({"expiry_date": {"$lte": (datetime.now(timezone.utc).date()+timedelta(days=30)).isoformat()}}).sort("expiry_date", 1).limit(5).to_list(5)], "recent_receipts": await _recent(db, "stock_receipts"), "recent_transfers": await _recent(db, "stock_transfers"), "alerts": await _recent(db, "alerts")}
+async def supply_manager_dashboard(
+    db: AsyncIOMotorDatabase = Depends(get_database), 
+    current_user: dict = Depends(RoleChecker([INVENTORY_READ]))):
+    data = {"metrics": {**await _inventory_counts(db), 
+                        "pending_purchase_orders": await db["purchase_orders"].count_documents({"status": "pending"}), 
+                        "pending_receipts": await db["stock_receipts"].count_documents({})}, 
+                        "inventory_status": await _inventory_status(db), 
+                        "pending_purchase_orders": await _recent(db, "purchase_orders"), 
+                        "expiring_items": [serialize_doc(d) for d in await db["inventory_batches"].find({"expiry_date": {"$lte": (datetime.now(timezone.utc).date()+timedelta(days=30)).isoformat()}}).sort("expiry_date", 1).limit(5).to_list(5)],
+                        "recent_receipts": await _recent(db, "stock_receipts"), 
+                        "recent_transfers": await _recent(db, "stock_transfers"), 
+                        "alerts": await _recent(db, "alerts")}
     return success_response(data, "Supply manager dashboard fetched successfully")
 
 @router.get("/inventory-manager")

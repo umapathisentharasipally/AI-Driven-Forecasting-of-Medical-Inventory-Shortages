@@ -23,6 +23,12 @@ from app.repositories import role_repository, user_repository
 from app.utils.date_utils import utc_now
 from app.utils.logger import get_logger
 
+from fastapi import Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+
+from app.streaming.kafka_producer import kafka_producer
 logger = get_logger(__name__)
 
 
@@ -69,7 +75,9 @@ async def ensure_admin_user() -> None:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await connect_db()
+    await kafka_producer.start()
     logger.info("MongoDB connected successfully")
+    
 
     app.state.predictor = None
     app.state.model_version = "unknown"
@@ -106,7 +114,7 @@ async def lifespan(app: FastAPI):
     logger.info("MongoDB indexes initialized successfully")
 
     yield
-
+    await kafka_producer.stop()
     await close_db_connection()
     logger.info("MongoDB connection closed")
 
@@ -115,11 +123,25 @@ app = FastAPI(
     version=settings.APP_VERSION,
     lifespan=lifespan,
 )
+FRONTEND_DIR = BASE_DIR.parent / "frontend"
+TEMPLATES_DIR = BASE_DIR / "app" / "templates"
 
+app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
+
+templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 register_exception_handlers(app)
 
 app.include_router(api_router, prefix="/api/v1")
 
+@app.get("/", response_class=HTMLResponse, include_in_schema=False)
+async def serve_frontend(request: Request):
+    return templates.TemplateResponse(
+        "index.html",
+        {
+            "request": request,
+            "api_base_url": "/api/v1",
+        },
+    )
 
 @app.get("/health")
 async def health_check():

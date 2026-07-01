@@ -5,6 +5,8 @@ import { validateUserForm } from "../../utils/validation.js";
 import { showToast } from "../../components/toast.js";
 
 const view = document.getElementById("app");
+const userId = getId(user);
+const name = getUserName(user);
 
 let users = [];
 let roles = [];
@@ -36,9 +38,11 @@ function filteredUsers() {
   return users.filter(user =>
     String(user.name || "").toLowerCase().includes(query) ||
     String(user.email || "").toLowerCase().includes(query) ||
-    String(user.role_name || user.role || "").toLowerCase().includes(query)
+    String(user.role_name || user.role || user.role?.name || "").toLowerCase().includes(query)
   );
 }
+
+
 
 function paginatedUsers() {
   const filtered = filteredUsers();
@@ -79,6 +83,22 @@ function renderToolbar() {
       />
     </section>
   `;
+}
+function getId(item) {
+  return item?.id || item?._id || "";
+}
+
+function getUserRoleId(user) {
+  return (
+    user?.role_id ||
+    user?.role?._id ||
+    user?.role?.id ||
+    ""
+  );
+}
+
+function getUserName(user) {
+  return user?.name || user?.full_name || "";
 }
 
 function renderTable() {
@@ -124,13 +144,16 @@ function renderTable() {
 }
 
 function renderRow(user, rowNumber) {
-  if (deletingId === user.id) {
+  const userId = getId(user);
+  const name = getUserName(user);
+
+  if (String(deletingId) === String(userId)) {
     return `
       <tr class="delete-confirm-row">
         <td colspan="7">
-          <strong>Delete ${escapeHTML(user.name)}?</strong>
+          <strong>Delete ${escapeHTML(name)}?</strong>
 
-          <button class="danger-btn small" data-confirm-user-delete="${user.id}">
+          <button class="danger-btn small" data-confirm-user-delete="${userId}">
             Yes, Delete
           </button>
 
@@ -142,7 +165,7 @@ function renderRow(user, rowNumber) {
     `;
   }
 
-  const initials = String(user.name || "U")
+  const initials = String(name || "U")
     .split(" ")
     .map(part => part[0])
     .join("")
@@ -158,33 +181,33 @@ function renderRow(user, rowNumber) {
           <span class="user-avatar">
             ${
               user.avatar_url
-                ? `<img src="${escapeHTML(user.avatar_url)}" alt="${escapeHTML(user.name)}" />`
+                ? `<img src="${escapeHTML(user.avatar_url)}" alt="${escapeHTML(name)}" />`
                 : initials
             }
           </span>
 
           <div>
-            <strong>${escapeHTML(user.name)}</strong>
+            <strong>${escapeHTML(name)}</strong>
             <small>${escapeHTML(user.department || "No Department")}</small>
           </div>
         </div>
       </td>
 
-      <td>${escapeHTML(user.email)}</td>
-      <td>${escapeHTML(user.role_name || user.role)}</td>
-      <td>${statusBadge(user.is_active)}</td>
+      <td>${escapeHTML(user.email || "-")}</td>
+      <td>${escapeHTML(user.role_name || user.role?.name || user.role || "-")}</td>
+      <td>${statusBadge(Boolean(user.is_active))}</td>
       <td>${escapeHTML(user.last_login || "-")}</td>
 
       <td class="table-actions">
-        <button class="icon-btn" data-edit-user="${user.id}">✎</button>
+        <button class="icon-btn" data-edit-user="${userId}">✎</button>
 
         <button 
           class="icon-btn ${user.is_active ? "danger" : ""}" 
-          data-toggle-user="${user.id}">
+          data-toggle-user="${userId}">
           ${user.is_active ? "Deactivate" : "Activate"}
         </button>
 
-        <button class="icon-btn danger" data-delete-user="${user.id}">
+        <button class="icon-btn danger" data-delete-user="${userId}">
           🗑
         </button>
       </td>
@@ -221,7 +244,7 @@ function renderModal() {
             <select name="role_id">
               <option value="">Select Role</option>
               ${roles.map(role => `
-                <option value="${role.id}">
+                <option value="${getId(role)}">
                   ${escapeHTML(role.name)}
                 </option>
               `).join("")}
@@ -298,21 +321,21 @@ function bindEvents() {
 
   document.querySelectorAll("[data-edit-user]").forEach(button => {
     button.addEventListener("click", () => {
-      const user = users.find(row => String(row.id) === String(button.dataset.editUser));
+      const user = users.find(row => String(getId(row)) === String(button.dataset.editUser));
       openModal(user);
     });
   });
 
   document.querySelectorAll("[data-toggle-user]").forEach(button => {
     button.addEventListener("click", async () => {
-      const user = users.find(row => String(row.id) === String(button.dataset.toggleUser));
+      const user = users.find(row => String(getId(row)) === String(button.dataset.toggleUser));
       await toggleUserStatus(user);
     });
   });
 
   document.querySelectorAll("[data-delete-user]").forEach(button => {
     button.addEventListener("click", () => {
-      deletingId = Number(button.dataset.deleteUser);
+      deletingId = button.dataset.deleteUser;
       renderUsersPage();
     });
   });
@@ -343,12 +366,12 @@ function openModal(user = null) {
   $("#userModalTitle").textContent = user ? "Edit User" : "Add User";
 
   if (user) {
-    form.elements.id.value = user.id;
-    form.elements.name.value = user.name || "";
+    form.elements.id.value = getId(user);
+    form.elements.name.value = getUserName(user);
     form.elements.email.value = user.email || "";
-    form.elements.role_id.value = user.role_id || "";
+    form.elements.role_id.value = getUserRoleId(user);
     form.elements.department.value = user.department || "";
-    form.elements.is_active.value = String(user.is_active);
+    form.elements.is_active.value = String(Boolean(user.is_active));
     $("#passwordField").style.display = "none";
   } else {
     $("#passwordField").style.display = "grid";
@@ -378,7 +401,7 @@ function getPayload(form, isEdit) {
   const payload = {
     name: data.name.trim(),
     email: data.email.trim(),
-    role_id: Number(data.role_id),
+    role_id: data.role_id,
     department: data.department?.trim() || null,
     is_active: data.is_active === "true"
   };

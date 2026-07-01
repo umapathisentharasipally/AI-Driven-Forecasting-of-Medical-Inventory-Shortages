@@ -261,7 +261,7 @@ function renderModal() {
             Cancel
           </button>
 
-          <button id="submitVendorBtn" class="primary-btn">
+          <button id="submitVendorBtn" type="submit" class="primary-btn">
             Save Vendor
           </button>
         </div>

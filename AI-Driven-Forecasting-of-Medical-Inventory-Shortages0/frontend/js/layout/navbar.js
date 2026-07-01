@@ -7,6 +7,11 @@ export function renderNavbar() {
     navbar.innerHTML = `
     
     <div class="navbar-left">
+        <button id="sidebarToggle" class="sidebar-toggle-btn" title="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
 
         <div class="breadcrumbs">
             <span id="breadcrumbText">
@@ -73,4 +78,35 @@ export function renderNavbar() {
     </div>
 
     `;
+
+    // Add sidebar toggle functionality
+    const sidebarToggleBtn = navbar.querySelector("#sidebarToggle");
+    const sidebar = document.getElementById("sidebar");
+
+    if (sidebarToggleBtn && sidebar) {
+        sidebarToggleBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("open");
+            sidebarToggleBtn.classList.toggle("active");
+        });
+
+        // Close sidebar when clicking on a menu item
+        sidebar.querySelectorAll(".sidebar-link").forEach(link => {
+            link.addEventListener("click", () => {
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove("open");
+                    sidebarToggleBtn.classList.remove("active");
+                }
+            });
+        });
+
+        // Close sidebar when clicking outside
+        document.addEventListener("click", (e) => {
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(e.target) && 
+                !sidebarToggleBtn.contains(e.target)) {
+                sidebar.classList.remove("open");
+                sidebarToggleBtn.classList.remove("active");
+            }
+        });
+    }
 }

@@ -106,6 +106,15 @@ export const dashboardService = {
       risk_level: item.risk_level || "Medium"
     }));
   },
+  async runBatchPredictions() {
+    return apiRequest("/predictions/batch", {
+      method: "POST",
+      body: JSON.stringify({
+        item_ids: [],
+        facility_id: null
+      })
+    });
+  },
 
   async getSystemStats() {
     const data = await this.getAdminDashboard();

@@ -64,10 +64,37 @@
 @media (max-width: 768px) {
   #sidebar {
     transform: translateX(-100%);
-    transition: transform 0.2s ease;
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 280px;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
   }
 
   #sidebar.open {
     transform: translateX(0);
+  }
+
+  .app-shell::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 105;
+  }
+
+  .app-shell #sidebar.open ~ *::before,
+  #sidebar.open {
+    z-index: 115;
+  }
+
+  .main-layout {
+    width: 100%;
+    margin-left: 0;
   }
 }

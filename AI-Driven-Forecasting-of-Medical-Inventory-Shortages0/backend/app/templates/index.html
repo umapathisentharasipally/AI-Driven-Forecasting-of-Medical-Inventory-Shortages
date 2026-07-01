@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0" />
+
+  <title>MedInv Forecast</title>
+
+  <link rel="stylesheet" href="/static/css/app.css">
+
+  <script>
+    window.MEDINV_CONFIG = {
+      API_BASE_URL: "{{ api_base_url }}"
+    };
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="/static/js/app.js"></script>
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside id="sidebar">
+      <nav id="sidebar-nav"></nav>
+    </aside>
+
+    <main class="main-layout">
+      <header id="navbar" class="navbar"></header>
+      <section id="app"></section>
+    </main>
+  </div>
+
+  <div id="toast-root" class="toast-root"></div>
+
+<script>
+  window.MEDINV_CONFIG = {
+    API_BASE_URL: "http://127.0.0.1:8000/api/v1"
+  };
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="/static/js/app.js"></script>
+</body>
+</html>

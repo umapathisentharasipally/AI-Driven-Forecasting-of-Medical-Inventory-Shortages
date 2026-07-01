@@ -59,6 +59,14 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         case_sensitive=True,
     )
+    KAFKA_BOOTSTRAP_SERVERS: str = "localhost:9092"
+    KAFKA_CLIENT_ID: str = "medical-inventory-service"
+    KAFKA_GROUP_ID: str = "medical-inventory-consumer-group"
+    KAFKA_INVENTORY_TOPIC: str = "medical.inventory.events"
+    KAFKA_ALERT_TOPIC: str = "medical.alert.events"
+    KAFKA_PREDICTION_TOPIC: str = "medical.prediction.events"
+    KAFKA_NOTIFICATION_TOPIC: str = "medical.notification.events"
+
 
 
 settings = Settings()

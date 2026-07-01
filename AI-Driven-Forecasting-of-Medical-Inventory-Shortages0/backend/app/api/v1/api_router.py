@@ -36,6 +36,8 @@ from .routes import (
     prescription_routes,
 )
 
+from app.realtime.websocket_routes import router as websocket_router
+
 api_router = APIRouter()
 
 import importlib.util
@@ -104,4 +106,5 @@ api_router.include_router(_get_router(dashboard_routes, "dashboard_routes.py"), 
 # Audit Logs
 api_router.include_router(_get_router(audit_log_routes, "audit_log_routes.py"), prefix="/audit-logs", tags=["Audit Logs"]) 
 
-api_router.include_router(_get_router(analyticas_routes, "analyticas_routes.py"), prefix="/analytics", tags=["Analytics"])
+api_router.include_router(_get_router(analyticas_routes, "analyticas_routes.py"), prefix="/analytics", tags=["Analytics"])  
+api_router.include_router(websocket_router, tags=["WebSocket"])

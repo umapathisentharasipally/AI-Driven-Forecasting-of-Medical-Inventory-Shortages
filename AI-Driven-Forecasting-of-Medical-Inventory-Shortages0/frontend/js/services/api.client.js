@@ -10,15 +10,24 @@ function getAccessToken() {
 }
 
 function redirectToLogin() {
+  // Clear all token variations
   localStorage.removeItem("access_token");
   localStorage.removeItem("refresh_token");
   localStorage.removeItem("token");
+  localStorage.removeItem("role");
+  localStorage.removeItem("med_user");
+  
   sessionStorage.removeItem("access_token");
   sessionStorage.removeItem("refresh_token");
   sessionStorage.removeItem("token");
 
-  if (!window.location.pathname.includes("login")) {
-    window.location.href = "/login.html";
+  // Redirect to login
+  console.warn("Session expired. Redirecting to login...");
+  
+  // Use hash-based navigation for SPA
+  if (window.location.hash !== "#login") {
+    window.location.hash = "#login";
+    window.location.reload();
   }
 }
 
@@ -48,14 +57,18 @@ export async function apiRequest(endpoint, options = {}) {
   }
 
   if (response.status === 401) {
-    console.error("Unauthorized. Token missing or expired.");
+    console.error("❌ Unauthorized: Token missing, invalid, or expired.");
     redirectToLogin();
-    throw new Error("Unauthorized");
+    throw new Error("Unauthorized - Session expired. Please login again.");
   }
 
   if (!response.ok) {
-    console.error("API ERROR:", data);
-    throw new Error(data?.error?.message || `Request failed with status ${response.status}`);
+    console.error("❌ API ERROR:", {
+      status: response.status,
+      endpoint: endpoint,
+      error: data?.error?.message || data?.message || "Unknown error"
+    });
+    throw new Error(data?.error?.message || data?.message || `Request failed with status ${response.status}`);
   }
 
   return data;
